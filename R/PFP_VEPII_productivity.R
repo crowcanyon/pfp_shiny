@@ -24,19 +24,25 @@ FedData::pkg_test("sp")
 # Suppress scientific notation
 options(scipen=999)
 
+# When to start the burn-in
+burnin_start <- 1991
+
+# What years to calculate PDSI norms over
+pdsi_norm_years <- 1981:2010
+
 # Load other useful functions
 for(f in list.files("./src", pattern = ".R", full.names = T)){
   source(f)
 }
 
-## Download GHCN data, and "burn-in" from 2000
+## Download GHCN data
 cortez_weather <- c(FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("TMIN","TMAX"), standardize = T, raw.dir = "../DATA/GHCN"),FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("PRCP"), raw.dir = "../DATA/GHCN"))
 
 cortez_weather_monthly <- cortez_weather %>%
   station_to_data_frame() %>%
   dplyr::as_data_frame() %>%
-  dplyr::filter(lubridate::year(DATE) %in% 1991:2015) %>%
-  dplyr::mutate(DATE = lubridate::ymd(DATE), TMIN = zoo::na.approx(TMIN/10), TMAX = zoo::na.approx(TMAX/10), TMAX = ((TMAX)*1.8 + 32), TMIN = ((TMIN)*1.8 + 32), TAVG = (TMAX+TMIN)/2, PRCP = PRCP*0.00393701) %>%
+  dplyr::filter(lubridate::year(DATE) %in% burnin_start:max(seasons), DATE < lubridate::floor_date(Sys.Date(), unit = "month")) %>%
+  dplyr::mutate(DATE = lubridate::ymd(DATE), TMIN = zoo::na.approx(TMIN/10, na.rm = F), TMAX = zoo::na.approx(TMAX/10, na.rm = F), TMAX = ((TMAX)*1.8 + 32), TMIN = ((TMIN)*1.8 + 32), TAVG = (TMAX+TMIN)/2, PRCP = PRCP*0.00393701) %>%
   dplyr::rename(TAVG_F = TAVG, PRCP_IN = PRCP) %>%
   dplyr::mutate(MONTH = lubridate::month(DATE), YEAR = lubridate::year(DATE)) %>%
   dplyr::select(YEAR,MONTH,TAVG_F,PRCP_IN) %>%
@@ -47,7 +53,7 @@ cortez_weather_monthly <- cortez_weather %>%
 cortez_weather_monthly_norms <- cortez_weather %>%
   station_to_data_frame() %>%
   dplyr::as_data_frame() %>%
-  dplyr::filter(lubridate::year(DATE) %in% 1981:2010) %>%
+  dplyr::filter(lubridate::year(DATE) %in% pdsi_norm_years) %>%
   dplyr::mutate(DATE = lubridate::ymd(DATE), TMIN = zoo::na.approx(TMIN/10), TMAX = zoo::na.approx(TMAX/10), TMAX = ((TMAX)*1.8 + 32), TMIN = ((TMIN)*1.8 + 32), TAVG = (TMAX+TMIN)/2, PRCP = PRCP*0.00393701) %>%
   dplyr::rename(TAVG_F = TAVG, PRCP_IN = PRCP) %>%
   dplyr::mutate(MONTH = lubridate::month(DATE), YEAR = lubridate::year(DATE)) %>%
@@ -62,11 +68,13 @@ cortez_weather_monthly_norms <- cortez_weather %>%
 # Fill missing months with norms
 cortez_weather_monthly <- cortez_weather_monthly %>% 
   dplyr::bind_rows(anti_join(cortez_weather_monthly_norms %>%
-                               dplyr::full_join(expand.grid(YEAR = 1991:2015, MONTH = 1:12),
+                               dplyr::full_join(expand.grid(YEAR = burnin_start:max(seasons), MONTH = 1:12) %>%
+                                                  filter(lubridate::ymd(paste0(sprintf("%04d", YEAR),sprintf("%02d", MONTH),"01")) < lubridate::floor_date(Sys.Date(), unit = "month")),
                                                 by = c("MONTH")),
                              cortez_weather_monthly, 
                              by=c("YEAR","MONTH"))) %>%
-  dplyr::arrange(YEAR,MONTH)
+  dplyr::arrange(YEAR,MONTH) %>%
+  dplyr::full_join(expand.grid(YEAR = burnin_start:max(seasons), MONTH = 1:12), by=c("YEAR","MONTH"))
 
 ## Read in the soils data
 soils <- rgdal::readOGR(dsn = "./data/soils.geojson", "OGRGeoJSON", verbose = FALSE)
@@ -81,8 +89,8 @@ scPDSI.path <- "./src/scpdsi"
 
 # Create a "blank" PDSI brick
 # Calculate June Monthly PDSI for each soil
-monthly_T <- data.frame(year=unique(cortez_weather_monthly$YEAR),matrix(paste0(" ",as.character(formatC(cortez_weather_monthly$TAVG_F, format = 'f', digits = 3, width=4))),ncol=12,byrow=T), stringsAsFactors=F)
-monthly_P <- data.frame(year=unique(cortez_weather_monthly$YEAR),matrix(paste0("  ",as.character(formatC(cortez_weather_monthly$PRCP_IN, format = 'f', digits = 3, width=4))),ncol=12,byrow=T), stringsAsFactors=F)
+monthly_T <- data.frame(year=unique(cortez_weather_monthly$YEAR),matrix(paste0(" ",gsub("0000NA","",sprintf("%06.3f",cortez_weather_monthly$TAVG_F))),ncol=12,byrow=T), stringsAsFactors=F)
+monthly_P <- data.frame(year=unique(cortez_weather_monthly$YEAR),matrix(paste0(" ",gsub("0000NA","",sprintf("%06.3f",cortez_weather_monthly$PRCP_IN))),ncol=12,byrow=T), stringsAsFactors=F)
 mon_T_normal <- data.frame(matrix(paste0(" ",as.character(formatC(cortez_weather_monthly_norms$TAVG_F, format = 'f', digits = 3, width=6))),ncol=12,byrow=T), stringsAsFactors=F)
 mon_T_normal[1,1] <- paste0(" ",mon_T_normal[1,1])
 Monthly_PDSI <- lapply(1:nrow(soils_data),FUN = function(x){
@@ -90,11 +98,11 @@ Monthly_PDSI <- lapply(1:nrow(soils_data),FUN = function(x){
 }) %>%
   lapply(FUN = function(x){
     out <- dplyr::bind_cols(cortez_weather_monthly %>% dplyr::select(YEAR,MONTH),x) %>%
-      dplyr::filter(YEAR %in% 2009:2015, MONTH == 6) %>%
+      dplyr::filter(YEAR %in% seasons, MONTH == 6) %>%
       dplyr::select(YEAR,PDSI) %>%
       collect %>%
       .[["PDSI"]]
-    names(out) <- 2009:2015
+    names(out) <- seasons
     return(out)
     })
 

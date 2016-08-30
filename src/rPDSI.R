@@ -29,9 +29,11 @@ rPDSI <- function(output.dir, monthly_T, monthly_P, mon_T_normal, awc, lat, scPD
   
   pdsi <- read.table(paste0(output.dir,"monthly/original/PDSI.tbl"))
   pdsi.vect <- c(t(as.matrix(pdsi[,2:13])))
+  pdsi.vect[pdsi.vect == -99] <- NA
   
   p_pt <- read.table(paste0(output.dir,"monthly/original/potentials"), header=T)
   p_pt.vect <- c(t(as.matrix(p_pt[,8])))
+  p_pt.vect[p_pt.vect == -99] <- NA
   
   pdsi.out <- data.frame(pdsi.vect,p_pt.vect)
   names(pdsi.out) <- c("PDSI","P_PE")

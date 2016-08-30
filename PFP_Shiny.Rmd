@@ -41,8 +41,7 @@ weather_stations_sp <- rgdal::readOGR(dsn = "./data/weather_stations.geojson", "
 # Garden data
 garden_locations <- rgdal::readOGR(dsn = "./data/gardens.geojson", "OGRGeoJSON", verbose = FALSE)
 garden_locations$color <- RColorBrewer::brewer.pal(length(garden_locations),"Dark2")
-growth_summaries <- readr::read_csv("./data/growth_summaries.csv") %>%
-  dplyr::filter(Garden != "MCG")
+growth_summaries <- readr::read_csv("./data/growth_summaries.csv")
 ears <- readr::read_csv("./data/ears.csv")
 yields <- readr::read_csv("./data/yields.csv")
 
@@ -97,8 +96,8 @@ NRCS SSURGO soils. Comparison with surrounding area, including ICR.
 
 ```{r, echo = FALSE}
 ## Define the display layers
-display_layers <- paste0("X",2009:2015)
-names(display_layers) <- 2009:2015
+display_layers <- paste0("X",2009:2016)
+names(display_layers) <- 2009:2016
 
 ## Create color palettes for each soil layer
 colorpal <- leaflet::colorNumeric(
@@ -320,7 +319,7 @@ dygraphs::renderDygraph({
     dygraphs::dySeries("TMIN_F", label = "Minimum temperature (ºF)", axis = 'y', color = "#67a9cf", strokeWidth = 1.5) %>% 
     dygraphs::dySeries("FGDD", label = "GDD (F)", axis = "y2", color = "black") %>%
     dygraphs::dyLegend(labelsSeparateLines = T, show = "onmouseover") %>%
-    dygraphs::dyRangeSelector(dateWindow = c("2015-01-01", "2015-12-31"))
+    dygraphs::dyRangeSelector(dateWindow = c("2016-01-01", "2016-12-31"))
   
 })
 
@@ -343,7 +342,7 @@ dygraphs::renderDygraph({
     dygraphs::dySeries("PRCP_IN", label = "Precipitation (in)", axis = 'y', stemPlot = T, drawPoints = F, strokeWidth = 1, pointSize = NA, color = "black") %>%
     dygraphs::dyLegend(show = "onmouseover") %>%
     dygraphs::dySeries("PRCP_IN2", label = "Precipitation (in) 2", axis = 'y2', stemPlot = T, drawPoints = F, strokeWidth = 0, pointSize = NA, color = "black") %>%
-    dygraphs::dyRangeSelector(dateWindow = c("2015-01-01", "2015-12-31")) 
+    dygraphs::dyRangeSelector(dateWindow = c("2016-01-01", "2016-12-31")) 
 })
 
 ```
@@ -432,7 +431,7 @@ Our first analysis is of maize growth in the gardens over each growing season. G
 ```{r, echo=FALSE}
 shiny::inputPanel(
   shiny::selectInput("the_year", label = "Growing season:",
-                     choices = seq(2009,2015,1), selected = 2009),
+                     choices = seq(2009,2016,1), selected = 2009),
   
   shiny::selectInput("the_var", label = "Developmental stage:",
                      choices = c("Early tassel development"="Early Tassel Development","Tassel development"="Tassel Development","Tasseling"="Tasseling","Silk development"="Silk Development","Silking"="Silking","Ear development"="Ear Development")),
@@ -485,7 +484,7 @@ shiny::renderPlot({
     }
     
     p <- p + 
-      ggplot2::geom_line(data=growth_plot, ggplot2::aes(Date, get(input$the_var), group=Garden, colour=get(input$color)))
+      ggplot2::geom_line(data=growth_plot, ggplot2::aes(lubridate::as_date(Date), get(input$the_var), group=Garden, colour=get(input$color)))
     
   }else if(input$x_axis == "Accumulated FGDD"){
     
@@ -557,7 +556,7 @@ How big were the ears, given different corn types and different gardens? What is
 
 shiny::inputPanel(
   shiny::selectInput("the_year_ears", label = "Growing season:",
-                     choices = seq(2009,2015,1), selected = 2009),
+                     choices = seq(2009,2016,1), selected = 2009),
   
   shiny::selectInput("the_var_ears", label = "Measurement:",
                      choices = c("Ear weight","Cob weight","Kernel weight")),

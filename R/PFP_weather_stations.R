@@ -19,7 +19,7 @@ dir.create("../DATA/WEATHER_STATIONS", showWarnings = F, recursive = T)
 
 # Copy and load the temperature pendant data collected by Grant Coffey and the
 # UNT team.
-file.copy(from = list.files("/Volumes/users/Pueblo\ Farming\ Project/Temperature_Precipitation_GDDs/CSV_WEATHER_STATIONS_AND_TEMPERATURE_PENDANTS/", pattern = ".csv", full.names = T),
+file.copy(from = list.files("/Volumes/crow-dfs/Pueblo\ Farming\ Project/WEATHER/CSV_WEATHER_STATIONS_AND_TEMPERATURE_PENDANTS/", pattern = ".csv", full.names = T),
           to = normalizePath("../DATA/WEATHER_STATIONS/"),
           overwrite = T)
 
@@ -39,7 +39,7 @@ weather_stations <- list.files("../DATA/WEATHER_STATIONS/", pattern = ".csv", fu
   dplyr::mutate(Date_Time = lubridate::with_tz(Date_Time, tzone = "MST")) %>% # Set to MST
   dplyr::mutate(Date_Time = lubridate::round_date(Date_Time, unit = "day")) %>% # Round date to day
   dplyr::distinct() %>% # Get only unique rows
-  dplyr::filter(lubridate::year(Date_Time) %in% 2009:2015) %>% # Only keep years 2009:2015
+  dplyr::filter(lubridate::year(Date_Time) %in% seasons) %>% # Only keep years 2009:2015
   dplyr::select(-`Intensity (Lux)`, -`Batt (V)`) %>% # Drop intensity and battery data
   dplyr::group_by(Location,Date_Time) %>% # Group by location and date
   dplyr::summarise(TMIN = min(`Temp (°C)`, na.rm = T),
@@ -54,7 +54,7 @@ weather_stations <- list.files("../DATA/WEATHER_STATIONS/", pattern = ".csv", fu
                 TMIN = ((TMIN)*1.8 + 32),
                 PRCP_IN = ifelse(PRCP_IN<0,NA,PRCP_IN)*0.00393701)
   
-weather_station_IDs <- readr::read_csv("/Volumes/users/Pueblo\ Farming\ Project/Temperature_Precipitation_GDDs/PFP_weather_stations.csv")
+weather_station_IDs <- readr::read_csv("/Volumes/crow-dfs/Pueblo\ Farming\ Project/WEATHER/PFP_weather_stations.csv")
 weather_station_IDs <- sp::SpatialPointsDataFrame(coords = weather_station_IDs[,c("Easting","Northing")], data = as.data.frame(weather_station_IDs[,c("ID","Abbreviation","Description")]), proj4string = CRS("+proj=utm +datum=NAD27 +zone=12"))
 weather_station_IDs <- sp::spTransform(weather_station_IDs,CRS("+proj=longlat"))
 

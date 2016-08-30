@@ -12,8 +12,8 @@ for(f in list.files("./src", pattern = ".R", full.names = T)){
 }
 
 ## A study area in the CCAC/BCP/ICR
-ICR <- sp::spTransform(rgdal::readOGR("/Volumes/users/Research/GIS/Basketmaker\ Communities\ Project/Basketmaker\ Communities\ CCAC.gdb","A_ICR_Outline"),CRS("+proj=longlat"))
-# ICR <- sp::spTransform(rgdal::readOGR("/Volumes/Crow-DFS/Research/GIS/Basketmaker\ Communities\ Project/Basketmaker\ Communities\ CCAC.gdb","A_ICR_Outline"),CRS("+proj=longlat"))
+# ICR <- sp::spTransform(rgdal::readOGR("/Volumes/crow-dfs/Research/GIS/Basketmaker\ Communities\ Project/Basketmaker\ Communities\ CCAC.gdb","A_ICR_Outline"),CRS("+proj=longlat"))
+# rgdal::writeOGR(ICR,dsn='../DATA/',layer="ICR",driver="ESRI Shapefile")
 # CCAC <- rgdal::readOGR("/Volumes/users/Research/GIS/MontezumaCounty/parcels/","NewMontezumaParcels")
 # CCAC <- CCAC[,"PID"]
 # rgdal::writeOGR(CCAC,dsn='../DATA/',layer="MontezumaParcels",driver="ESRI Shapefile")
@@ -32,6 +32,7 @@ ICR <- sp::spTransform(rgdal::readOGR("/Volumes/users/Research/GIS/Basketmaker\ 
 #   sp::spTransform(CRS("+proj=longlat"))
 # rgdal::writeOGR(CCAC,dsn='../DATA/',layer="CCAC",driver="ESRI Shapefile")
 
+ICR <- rgdal::readOGR('../DATA/',"ICR")
 CCAC <- rgdal::readOGR('../DATA/',"CCAC")
 CCAC_poly <- rgeos::gUnion(ICR,spTransform(CCAC,CRS(raster::projection(ICR))))
 CCAC_poly <- rgeos::gUnaryUnion(CCAC_poly)

@@ -1,37 +1,47 @@
 Season,Garden,Variety,Clumps,PlantingDate,HarvestDate,UTMEast,UTMNorth,Spacing,Area,Comments
-2009,CDG,Hopi Blue,35,2009-05-20T00:00:00Z,,711054,4136717,1.6,100,Area covered the archaeological check dam was not planted.
-2010,CDG,Hopi White,26,2010-05-20T00:00:00Z,,711054,4136717,1.4,68,Area of garden planted in corn reduced to reflect space planted in beans this year.
-2011,CDG,Hopi White,26,2011-05-19T00:00:00Z,10/10/2011 - 10/12/2011,711054,4136717,1.75,85.5,
-2012,CDG,Hopi White,21,2012-05-17T00:00:00Z,,711054,4136717,NA,80,Soil conditions at planting very dry. Very poor germination.
-2013,CDG,Hopi White,27,2013-05-22T00:00:00Z,10/15/2013,711054,4136717,1.75,80,"Soil conditions at planting, using moisture meter 6 on scale of 10. Good germination. Dry summer late rains."
-2014,CDG,Hopi White,25,2014-05-22T00:00:00Z,,711054,4136717,1.75,80,Germination in 10 days. Variable but good below surface moisture.
-2015,CDG,Hopi White,47,2015-05-21T00:00:00Z,,711054,4136717,1.75,160,"This garden was expanded to approximately 15x15 meters. About 13.5 x 12 planted. Germination by 6/1/15 about 30 of the 47, by 6/12 100% germination."
-2009,KUG,Hopi Sweet,62,2009-05-20T00:00:00Z,,710401,4136479,1.7,225,Area reflects the portion of garden  only planted in maize.
-2010,KUG,Hopi Blue,77,2010-05-20T00:00:00Z,,710401,4136479,1.6,225,Only about 2/3's of total garden area planted  in corn this year.
-2011,KUG,Hopi Blue,36,2011-05-19T00:00:00Z,10/10/2011 - 10/12/2011,710401,4136479,2,208,Mostly the center portion of this garden planted.
-2012,KUG,Hopi Blue,32,2012-05-17T00:00:00Z,,710401,4136479,1.85,121,Soil conditions at planting very  dry.
-2013,KUG,Hopi Blue,31,2013-05-22T00:00:00Z,10/15/2013,710401,4136479,2,120,"Soil conditions at planting 6-7. Germination slow to begin. Dry summer, late rains"
-2014,KUG,Hopi Blue,29,2014-05-22T00:00:00Z,,710401,4136479,2,120,"Germination within 10 days, but slower, 24 of 28, 5 replanted."
-2015,KUG,Hopi Blue,36,2015-05-21T00:00:00Z,,710401,4136479,2.25,140," About 15 x 9.5 m planted in corn. Germination by 6/1. Ant damage to several clumps, Five additional clumps planted 6/3/15"
-2015,MCG,Hopi Blue,25,2015-05-20T00:00:00Z,,691410,4181338,2.75,144,"New garden planted 6/20/15. Located in Mike Coffey's garden, north of Dove Creek , CO. The garden is situated in a small drainage with a north facing slope. Notes on growth stages not complete."
-2009,PHG,Hopi White,23,2009-05-20T00:00:00Z,,710664,4136565,1.25,64,Area reflects the portion of garden planted in maize.
-2010,PHG,Hopi White,30,2010-05-20T00:00:00Z,,710664,4136565,1.4,49,
-2011,PHG,Qotsa qao,25,2011-05-19T00:00:00Z,10/10/2011 - 10/12/2011,710664,4136565,1.5,64,Qotsa qao from Owen is Hopi White on red cob
-2012,PHG,Hopi White,20,2012-05-17T00:00:00Z,,710664,4136565,NA,64,Soil conditions at planting very dry. Very poor germination
-2013,PHG,Hopi Blue,25,2013-05-22T00:00:00Z,10/15/2013,710664,4136565,1.75,64,"Soil conditions at planting 4-5 germination slow to begin, quick to go into stress."
-2014,PHG,Hopi White,20,2014-05-22T00:00:00Z,,710664,4136565,1.5,64,Germination within 10 days . Ghopher burrows in garden
+2008,CDG,Hopi Blue,60,2008-05-28,,711054,4136717,1.6,100.0,Area covered by the archaeological  feature (check dam) was not planted.
+2009,CDG,Hopi Blue,35,2009-05-20,,711054,4136717,1.6,100.0,Area covered the archaeological check dam was not planted.
+2010,CDG,Hopi White,26,2010-05-20,,711054,4136717,1.4,68.0,Area of garden planted in corn reduced to reflect space planted in beans this year.
+2011,CDG,Hopi White,26,2011-05-19,10/10/2011 - 10/12/2011,711054,4136717,1.75,85.5,
+2012,CDG,Hopi White,21,2012-05-17,,711054,4136717,NA,80.0,Soil conditions at planting very dry. Very poor germination.
+2013,CDG,Hopi White,27,2013-05-22,10/15/2013,711054,4136717,1.75,80.0,"Soil conditions at planting, using moisture meter 6 on scale of 10. Good germination. Dry summer late rains."
+2014,CDG,Hopi White,25,2014-05-22,,711054,4136717,1.75,80.0,Germination in 10 days. Variable but good below surface moisture.
+2015,CDG,Hopi White,47,2015-05-21,,711054,4136717,1.75,160.0,"This garden was expanded to approximately 15x15 meters. About 13.5 x 12 planted. Germination by 6/1/15 about 30 of the 47, by 6/12 100% germination."
+2016,CDG,Hopi White,34,2016-05-25,,711054,4136717,NA,160.0,
+2009,KUG,Hopi Sweet,62,2009-05-20,,710401,4136479,1.7,225.0,Area reflects the portion of garden  only planted in maize.
+2010,KUG,Hopi Blue,77,2010-05-20,,710401,4136479,1.6,225.0,Only about 2/3's of total garden area planted  in corn this year.
+2011,KUG,Hopi Blue,36,2011-05-19,10/10/2011 - 10/12/2011,710401,4136479,2.0,208.0,Mostly the center portion of this garden planted.
+2012,KUG,Hopi Blue,32,2012-05-17,,710401,4136479,1.85,121.0,Soil conditions at planting very  dry.
+2013,KUG,Hopi Blue,31,2013-05-22,10/15/2013,710401,4136479,2.0,120.0,"Soil conditions at planting 6-7. Germination slow to begin. Dry summer, late rains"
+2014,KUG,Hopi Blue,29,2014-05-22,,710401,4136479,2.0,120.0,"Germination within 10 days, but slower, 24 of 28, 5 replanted."
+2015,KUG,Hopi Blue,36,2015-05-21,,710401,4136479,2.25,140.0," About 15 x 9.5 m planted in corn. Germination by 6/1. Ant damage to several clumps, Five additional clumps planted 6/3/15"
+2016,KUG,Hopi Blue,23,2016-05-25,,710401,4136479,NA,144.0,
+2015,MCG,Hopi Blue,25,2015-05-20,,691410,4181338,2.75,144.0,"New garden planted 6/20/15. Located in Mike Coffey's garden, north of Dove Creek , CO. The garden is situated in a small drainage with a north facing slope. Notes on growth stages not complete."
+2016,MCG,Hopi Blue,46,2016-05-24,,691410,4181338,NA,144.0,
+2008,PHG,various,5,2008-05-28,,710664,4136565,NA,64.0,No yield produced.
+2009,PHG,Hopi White,23,2009-05-20,,710664,4136565,1.25,64.0,Area reflects the portion of garden planted in maize.
+2010,PHG,Hopi White,30,2010-05-20,,710664,4136565,1.4,49.0,
+2011,PHG,Qotsa qao,25,2011-05-19,10/10/2011 - 10/12/2011,710664,4136565,1.5,64.0,Qotsa qao from Owen is Hopi White on red cob
+2012,PHG,Hopi White,20,2012-05-17,,710664,4136565,NA,64.0,Soil conditions at planting very dry. Very poor germination
+2013,PHG,Hopi Blue,25,2013-05-22,10/15/2013,710664,4136565,1.75,64.0,"Soil conditions at planting 4-5 germination slow to begin, quick to go into stress."
+2014,PHG,Hopi White,20,2014-05-22,,710664,4136565,1.5,64.0,Germination within 10 days . Ghopher burrows in garden
 2015,PHG,NA,NA,NA,,710664,4136565,NA,NA,No corn planted here this year. Several beans and two squash planted. Native (coyote) tobacco present.
-2009,PLC,Kokoma,32,2009-05-20T00:00:00Z,,711120,4136832,1.8,120,Area encompassed by brush dam not planted.
-2010,PLC,Greasy-head & Hopi Blue,38,2010-05-20T00:00:00Z,,711120,4136832,1.2,81,"Some brush was removed form edges and center ""dams"" of this garden but only 2/3's of the garden was planted in corn."
-2011,PLC,Hopi Blue,39,2011-05-19T00:00:00Z,10/10/2011 - 10/12/2011,711120,4136832,1.5,91,
-2012,PLC,Hopi Blue,23,2012-05-17T00:00:00Z,,711120,4136832,NA,NA,Soil conditions at planting very dry. Very poor germination
-2013,PLC,Hopi Blue,34,2013-05-22T00:00:00Z,10/15/2013,711120,4136832,1.75,72,"Soil conditions at planting variable in garden, about 5 of 10. Germination about 80%. Dry summer late rains"
-2014,PLC,Hopi Blue,28,2014-05-22T00:00:00Z,,711120,4136832,1.75,NA,Germination in 10 days. Good  subsurface moisture and soil build up from heavy rain fall 2013.
-2015,PLC,Hopi Blue,30,2015-05-21T00:00:00Z,,711120,4136832,1.5,90, About 13.25 x 7 m planted in corn. Germination 100% by 6/1/2015
-2009,POG,Greasy-head,28,2009-05-20T00:00:00Z,,710972,4136810,1.5,68,Area of garden increased  by expansion from 2008 season.
-2010,POG,Greasy-head,30,2010-05-20T00:00:00Z,,710972,4136810,1.5,68,Area of garden planted in corn reduced to reflect space planted in beans this year.
-2011,POG,Hopi White,26,2011-05-19T00:00:00Z,10/10/2011 - 10/12/2011,710972,4136810,1.5,68,
-2012,POG,Hopi White,20,2012-05-17T00:00:00Z,,710972,4136565,NA,68,Soil conditions at planting very dry. Very poor germination.
-2013,POG,Hopi White,25,2013-05-22T00:00:00Z,10/15/2013,710972,4136565,1.75,68,"Soil condition at planting 7. Germination slow. Dry summer, late rain"
-2014,POG,Hopi White,20,2014-05-22T00:00:00Z,,710972,4136565,1.5,NA,"Germination within 10 days, 16 of 20, 4 clumps replanted. Ghopher burrows in garden."
-2015,POG,Hopi White,20,2015-05-21T00:00:00Z,,710972,4136565,1.75,55,"About 7.5 x 7.5 m pplanted. Germination 19 of 20 by 6/1/15. Clump 15 planted over a ghopher hole, no germination."
+2016,PHG,NA,NA,NA,,NA,NA,NA,NA,
+2008,PLC,Hopi Sweet,80,2008-05-28,,711120,4136832,1.14,144.0,Area reduced by  brush dam not planted.
+2009,PLC,Kokoma,32,2009-05-20,,711120,4136832,1.8,120.0,Area encompassed by brush dam not planted.
+2010,PLC,Greasy-head & Hopi Blue,38,2010-05-20,,711120,4136832,1.2,81.0,"Some brush was removed form edges and center ""dams"" of this garden but only 2/3's of the garden was planted in corn."
+2011,PLC,Hopi Blue,39,2011-05-19,10/10/2011 - 10/12/2011,711120,4136832,1.5,91.0,
+2012,PLC,Hopi Blue,23,2012-05-17,,711120,4136832,NA,NA,Soil conditions at planting very dry. Very poor germination
+2013,PLC,Hopi Blue,34,2013-05-22,10/15/2013,711120,4136832,1.75,72.0,"Soil conditions at planting variable in garden, about 5 of 10. Germination about 80%. Dry summer late rains"
+2014,PLC,Hopi Blue,28,2014-05-22,,711120,4136832,1.75,NA,Germination in 10 days. Good  subsurface moisture and soil build up from heavy rain fall 2013.
+2015,PLC,Hopi Blue,30,2015-05-21,,711120,4136832,1.5,90.0, About 13.25 x 7 m planted in corn. Germination 100% by 6/1/2015
+2016,PLC,Hopi Blue,28,2016-05-25,,711120,4136832,NA,90.0,
+2008,POG,Katsina,38,2008-05-28,,710972,4136810,1.0,42.5,Entire area within was planted.
+2009,POG,Greasy-head,28,2009-05-20,,710972,4136810,1.5,68.0,Area of garden increased  by expansion from 2008 season.
+2010,POG,Greasy-head,30,2010-05-20,,710972,4136810,1.5,68.0,Area of garden planted in corn reduced to reflect space planted in beans this year.
+2011,POG,Hopi White,26,2011-05-19,10/10/2011 - 10/12/2011,710972,4136810,1.5,68.0,
+2012,POG,Hopi White,20,2012-05-17,,710972,4136565,NA,68.0,Soil conditions at planting very dry. Very poor germination.
+2013,POG,Hopi White,25,2013-05-22,10/15/2013,710972,4136565,1.75,68.0,"Soil condition at planting 7. Germination slow. Dry summer, late rain"
+2014,POG,Hopi White,20,2014-05-22,,710972,4136565,1.5,NA,"Germination within 10 days, 16 of 20, 4 clumps replanted. Ghopher burrows in garden."
+2015,POG,Hopi White,20,2015-05-21,,710972,4136565,1.75,55.0,"About 7.5 x 7.5 m pplanted. Germination 19 of 20 by 6/1/15. Clump 15 planted over a ghopher hole, no germination."
+2016,POG,Hopi White,25,2016-05-25,,710972,4136565,NA,55.0,

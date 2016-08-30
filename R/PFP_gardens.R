@@ -12,13 +12,10 @@ FedData::pkg_test("bocinsky/PaleoCAR")
 # Suppress scientific notation
 options(scipen=999)
 
-# Seasons for plotting
-seasons <- 2009:2015
-
 ## Data munging part of the script. Run once to output clean CSVs
 
 ## Read in the PFP data directly from the PFP results database
-file.copy(from = "/Volumes/users/Pueblo Farming Project/Documentation Forms and Data/Pueblo Farmers Project database.mdb",
+file.copy(from = "/Volumes/crow-dfs/Pueblo Farming Project/DATA/Pueblo Farmers Project database.mdb",
           to="../DATA/Pueblo Farmers Project database.mdb",
           overwrite=T)
 # file.copy(from = "/Volumes/Crow-DFS/Pueblo Farming Project/Documentation Forms and Data/Pueblo Farmers Project database.mdb",
@@ -32,7 +29,7 @@ gardens <- PFP_data$`tbl garden` %>%
   dplyr::select(Season,Garden,Variety,Clumps,PlantingDate,HarvestDate,UTMEast,UTMNorth, Spacing, Area, Comments) %>%
   dplyr::mutate(PlantingDate = lubridate::mdy(PlantingDate)) %>%
   dplyr::arrange(Garden,Season) %>%
-  dplyr::filter(Season %in% seasons) # Only keep years 2009:2015
+  dplyr::filter(Season %in% seasons) # Only keep the right seasons
 
 readr::write_csv(gardens,"./data/gardens.csv")
 
@@ -66,9 +63,7 @@ for(g in unique(PFP_data$`tbl growth`$Garden)){
       dplyr::filter(Garden == g, Season == y)
     vals <- expand.grid(Date = sort(c((this.gardens %>%
                                          dplyr::select(PlantingDate))[[1]],
-                                      unique(sub$Date))
-    
-    ),
+                                      lubridate::as_date(unique(sub$Date)))),
     Garden = g,
     Clump = 1:(this.gardens %>%
                  dplyr::select(Clumps) %>%
@@ -128,8 +123,8 @@ ranges <- function(x){
   paste(sort(c(as.character(x[singles]),paste(x[starts],x[ends],sep='–'))), collapse=', ')
 }
 
-garden_locations <- lapply(gsub(".kml","",list.files("../DATA/Gardens/")), function(f){
-  out <- rgdal::readOGR(dsn="../DATA/Gardens/",layer=f)
+garden_locations <- lapply(list.files("../DATA/Gardens/"), function(f){
+  out <- rgdal::readOGR(dsn=paste0("../DATA/Gardens/",f),layer=f)
   out <- spChFIDs(out, as.character(out$Name))
 }) %>%
   do.call(what=rbind)
@@ -155,8 +150,8 @@ cortez_weather <- c(FedData::get_ghcn_daily_station(ID="USC00051886", elements =
   dplyr::as_data_frame() %>%
   dplyr::filter(year(DATE) %in% seasons) %>%
   dplyr::mutate(DATE = lubridate::ymd(DATE),
-                TMIN = zoo::na.approx(TMIN/10),
-                TMAX = zoo::na.approx(TMAX/10),
+                TMIN = zoo::na.approx(TMIN/10, na.rm = F),
+                TMAX = zoo::na.approx(TMAX/10, na.rm = F),
                 FGDD = calc_gdd(tmin = TMIN, tmax = TMAX, t.base=10, t.cap=30, to_fahrenheit=T),
                 TMAX = ((TMAX)*1.8 + 32),
                 TMIN = ((TMIN)*1.8 + 32),
@@ -193,7 +188,7 @@ for(g in unique(growth_summaries$Garden)){
 #                     year(Date_Time) == y, 
 #                     Date_Time >= gardens_year$PlantingDate) %>%
       dplyr::mutate(Acc_FGDD = cumsum(FGDD)) %>%
-      dplyr::filter(DATE %in% PFP_data_growth_year$Date) %>%
+      dplyr::filter(DATE %in% lubridate::as_date(PFP_data_growth_year$Date)) %>%
       dplyr::select(Acc_FGDD) %>%
       unlist() %>%
       as.numeric()

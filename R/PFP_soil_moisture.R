@@ -16,7 +16,7 @@ for(f in list.files("./src", pattern = ".R", full.names = T)){
 # Copy and load the soil moisture data collected by Grant Coffey and the
 # UNT team.
 unlink("../DATA/UNT_MOISTURE_MONITORS/", recursive = T, force = T)
-file.copy(from = normalizePath("/Volumes/users/Pueblo\ Farming\ Project/Temperature_Precipitation_GDDs/UNT_MOISTURE_MONITORS/"),
+file.copy(from = normalizePath("/Volumes/crow-dfs/Pueblo\ Farming\ Project/WEATHER/UNT_MOISTURE_MONITORS/"),
           to = normalizePath("../DATA/"),
           overwrite = T,
           recursive = T)
