@@ -10,7 +10,7 @@ output:
     theme: sandstone
     css: PFP_Shiny.css
     toc: yes
-    toc_depth: 4
+    toc_depth: 3
     toc_float:
       collapsed: no
 runtime: shiny
@@ -47,21 +47,24 @@ yields <- readr::read_csv("./data/yields.csv")
 
 ```
 
-## Introduction
+## Introduction {.tabset}
 The idea for the PFP emerged from Crow Canyon’s 2004 NAGPRA consultations with Hopi when they said they would like to collaborate on research to better understand ancestral Pueblo agriculture.  To pursue this goal Crow Canyon hosted a planning meeting in late 2005. Traditional Pueblo farmers from Hopi, Jemez, Ohkay Owingeh, and Tesuque and anglo scholars who study Pueblo agriculture met together and decided to develop an experimental farming project at Crow Canyon. This project would focus on dry farming because that was the main type of farming practiced in the Mesa Verde region, and the group decided that Hopi would take the lead as the farming experts since they continue to practice dry farming today.
 
 A series of grants has funded the PFP, which began in the fall of 2007 when Hopi farmers selected field locations. Over time, five gardens have been planted on Crow Canyon’s campus. Our shorthand names for these are the CDG garden, PLC garden, POG garden, the PHC garden, the KUG garden. These five gardens provide a cross section of the canyon and allow us to measure the effect of cold air drainage on agricultural production. The Hopi used their traditional ecological knowledge to select garden locations, including the types of native plants that indicate good locations for fields and their assessment of the soils. Their search was limited to Crow Canyon’s campus, and while they found spots they thought were OK, they did not find locations they considered to be ideal. This oblique view shows the garden locations, and they are also seen in this aerial view. Last year we added a sixth garden 30 miles north of Crow Canyon’s campus; we call this the MCG garden and placed it in what we consider to be an ideal higher elevation mesa top setting.
 
 Planting and harvesting began in 2008 and has continued every year since, although not every garden was planted every year. In 2008, Hopi farmers brought 15 different varieties of maize to Crow Canyon. After discussion, we selected blue, white, sweet, greasy head, and Kachina corn for planting. Since 2011 we have focused on blue and white corn exclusively. We used the Hopi seed during the first year but seed from our harvests since then. Hopi farmers provided instructions on how to plant, tend, and harvest the corn, how to control for pests, and other information.  Hopi farming practices include starting with about 12 plants per clump, planting deep, having wide spacing between clumps so there is no competition for soil moisture, and thinning the clump to about six plants when they are knee high.
 
-### What is the PFP?
+### Who
+PFP participants. Photos. 
+
+### What
 The Hopi farmers have a keen interest in determining whether their farming methods work in the Mesa Verde region, an area they consider as a part of their traditional homeland. Even though they no longer rely on corn for the bulk of their food, corn and corn farming remain central to Hopi lifeways today. For the Hopi, the PFP links their present-day lives and culture to their history and their ancestors, and this is of paramount importance to them. 
 
 For Crow Canyon, the PFP contributes to both our humanistic and scientific understanding of Pueblo farming, and we incorporate the PFP results into both our education and research programs.  PFP scientific goals are many and diverse, but today I’ll focus on the goals of understanding how environmental factors affect corn growth and using this knowledge to estimate ancestral Pueblo corn farming yields.  
 
 The PFP collects detailed information about soils, records annual variation in precipitation and temperature, and, in a new partnership with the University of North Texas, takes measurements of soil moisture and soil temperature. Each week we also record the height of the plants and make observations on when the following growth stages occur: early tassel development, tassel development, tasseling, silk development, silking, and ear development.
 
-### Where are the PFP gardens?
+### Where
 Five PFP gardens are scattered around Crow Canyon Archaeological Center's rural campus in Cortez, Colorado. Click on the markers to explore the gardens!
 
 In 2015, we planted a new garden in the "bean fields" north of Crow Canyon's campus. This garden, called the Mike Coffey Garden (named after our friend Mike who donated the land for use to farm), is much higher in elevation than the Crow Canyon gardens.
@@ -84,11 +87,19 @@ gardens_m  # Print the map
 
 ```
 
+### When
+2008--2016
 
-## How corn grows
+## How corn grows {.tabset}
 Basics of corn phenology. Parts of corn. Growth stages.
 
-### Does soil matter?
+### Variety
+Landraces. Hopi varieties. Selection.
+
+### Cultivation
+Technologies. Rain-fed. Water management.
+
+### Soil
 Nutrients. Water. Direct-precipitation (rain-fed) farming.
 
 #### Soils in the PFP gardens
@@ -271,7 +282,7 @@ shiny::downloadLink(outputId = 'download_soil_moisture', label = 'Download soil 
 ```
 
 
-### Does weather matter?
+### Weather
 Precipitation and temperature. Local. Cold air drainage.
 
 #### Measuring accumulated heat---GDD
@@ -422,10 +433,10 @@ dygraphs::renderDygraph({
 ```
 -->
 
-## The PFP Field Experiments
+## The PFP Field Experiments {.tabset}
 2008--2015. 2008 recorded differently, so only 2009--2015 data presented here. 
 
-### How well did the corn grow?
+### Growth
 Our first analysis is of maize growth in the gardens over each growing season. Growth is measured as the proportion of clumps with plants reaching a particular growth stage, at a particular point in time. Select a year and a growth stage, and choose whether you'd like the date or the accumulated Fahrenheit growing degree days (FGDDs) to plot on the horizontal axis.
 
 ```{r, echo=FALSE}
@@ -546,7 +557,7 @@ shiny::downloadLink(outputId = 'download_growth_summaries', label = 'Download gr
 # )
 ```
 
-### How much corn was produced?
+### Production
 Graphs like those that Dylan produced, showing variation over seasons. 
 
 #### Ear diversity
@@ -701,10 +712,10 @@ shiny::downloadLink(outputId = 'download_yields', label = 'Download yield data')
 
 ```
 
-## What have we learned?
+## What have we learned? {.tabset}
 Review research questions. 
 
-### Pueblo corn in the Mesa Verde region?
+### Mesa Verde
 Hopi corn grows well in the CMV. Might be even better up in high areas during warm years. 
 
 ### Ancient yields?
@@ -752,7 +763,7 @@ Conclusions
 To conclude, the PFP is an ongoing and long-term study, and we believe it will provide many useful results.  The point I made above—that VEP and PFP data display the same trends—is important in this regard because it suggests that PFP results could be used to rescale the VEP model estimates thereby increasing their accuracy. We look forward to our continuing partnership with Hopi on the PFP and the many research and education products that will come out of this project. Thank you.
 
 
-### Acknowledgements
+## Acknowledgements {.tabset}
 The Pueblo Farming Project started as part of the Village Ecodynamics Project and was initially funded under National Science Foundation grants DGE-1347973 and DEB-0816400. Subsequent years of the PFP received funding from the History Colorado State Historical Fund (grant 2015-02-025), the National Geographic Society Genographic Project, and the Christensen Fund.
 
 <img src="./nsf.png" style="height: 100px;"/>&nbsp;&nbsp;<img src="./ngs.svg" style="height: 75px;"/>&nbsp;&nbsp;<img src="./christensen.png" style="height: 75px;"/>
