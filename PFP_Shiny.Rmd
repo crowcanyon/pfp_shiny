@@ -173,10 +173,7 @@ UNT project. Soil moisture for photosynthesis. Temperature for seedling developm
 shiny::inputPanel(
   shiny::selectInput("the_var_soil_moisture", label = "Soil measurement:",
                      choices = c("Moisture","Temperature")),
-  #   
-  #   shiny::selectInput("the_display_soil_moisture", label = "Display by:",
-  #                      choices = c("Garden","Depth")),
-  
+
   shiny::selectInput("the_garden_soil_moisture", label = "Garden/Location:",
                      choices = unique(gsub(" — NA","",paste0(soil_moisture$Garden," — ",soil_moisture$Location)))),
   
@@ -210,14 +207,12 @@ shiny::renderPlot({
       dplyr::select(Time,contains("VWC")) %>%
       reshape2::melt(id.vars="Time")
     
-    # the_range <- soil_moisture %>% ungroup() %>% select(contains("VWC")) %>% range()
     the_range <- c(0.05,0.35)
   }else{
     moisture_data <- moisture_data %>%
       dplyr::select(Time,contains("Temp")) %>%
       reshape2::melt(id.vars="Time")
     
-    # the_range <- soil_moisture %>% ungroup() %>% select(contains("Temp")) %>% range()
     the_range <- c(32,85)
   }
   
@@ -253,18 +248,10 @@ shiny::renderPlot({
       ggplot2::scale_colour_hue(name="Depth",
                          breaks=c("VWC_15", "VWC_30", "VWC_45"),
                          labels=c('15 cm', '30 cm', '45 cm'))
-    
-#     if(input$show_precip){
-#       this_weather_plot <- cortez_weather %>%
-#         dplyr::filter(DATE %within% (min(moisture_data$Time)%--%max(moisture_data$Time)))
-#       soil_moisture_plot <- soil_moisture_plot + 
-#         ggplot2::geom_linerange(data = this_weather_plot, aes(x=DATE, ymin = 0, ymax = PRCP_IN)) + 
-#         ggplot2::ylab(paste0(bquote('Volumetric water content ('*m^3/m^3*')'),'\n —and— \n Cortez precipitation (inches)'))
-#     }else{
+
       soil_moisture_plot <- soil_moisture_plot + 
         ggplot2::ylab(bquote('Volumetric water content ('*m^3/m^3*')'))
-    # }
-    
+
   }else{
     soil_moisture_plot <- soil_moisture_plot + 
       ggplot2::ylab("Temperature (ºF)") +
@@ -358,81 +345,6 @@ dygraphs::renderDygraph({
 
 ```
 
-<!-- 
-#### Weather in the PFP gardens
-Temperature monitors and weather station locations. Spotty record. Interactive TS plot of both. Does it capture cold air drainage?
-
-```{r, echo=FALSE}
-suppressWarnings(weather_stations_dy <- weather_stations %>%
-  dplyr::left_join(weather_stations_sp@data %>% dplyr::select(ID, Abbreviation), by = c("Location" = "ID")) %>%
-  dplyr::filter(Abbreviation != "East_Hill") %>%
-  dplyr::select(-Location))
-
-
-shiny::inputPanel(
-  shiny::selectInput("the_garden_weather_stations",
-                     label = "Garden:",
-                     choices = c("Check Dam Garden" = "CDG",
-                                 "Karen's Upper Garden" = "KUG",
-                                 "Pithouse Garden" = "PHG",
-                                 "Paul's Old Garden" = "POG",
-                                 "Pueblo Learning Center Garden" = "PLC")
-  )
-)
-
-weather_stations_dy_this <- shiny::reactive({
-  suppressMessages(weather_stations_dy_this <- weather_stations_dy %>%
-    dplyr::filter(Abbreviation == input$the_garden_weather_stations) %>%
-    dplyr::arrange(Date_Time) %>%
-    as.data.frame())
-  
-  row.names(weather_stations_dy_this) <- round.POSIXt(weather_stations_dy_this$Date_Time, "day")
-
-  weather_stations_dy_this <- weather_stations_dy_this %>%
-    dplyr::select(-Date_Time)
-  
-  weather_stations_dy_this
-})
-
-dygraphs::renderDygraph({
-  the_graph <- weather_stations_dy_this() %>% 
-    dplyr::select(TMAX, TMIN, FGDD) %>%
-    as.data.frame()
-  dygraphs::dygraph(the_graph) %>%
-    dygraphs::dyAxis('y',
-                     label = "Temperature (ºF)",
-                     drawGrid = F,
-                     independentTicks = T) %>%
-    dygraphs::dyAxis('y2',
-                     label = "Daily GDD (F)",
-                     valueRange = c(0, 30),
-                     drawGrid = F,
-                     independentTicks = T) %>%
-    dygraphs::dyAxis('x',
-                     drawGrid = F) %>%
-    dygraphs::dySeries("TMAX",
-                       label = "Maximum temperature (ºF)",
-                       axis = 'y',
-                       color = "#ef8a62",
-                       strokeWidth = 1.5) %>%
-    dygraphs::dySeries("TMIN",
-                       label = "Minimum temperature (ºF)",
-                       axis = 'y',
-                       color = "#67a9cf",
-                       strokeWidth = 1.5) %>% 
-    dygraphs::dySeries("FGDD",
-                       label = "GDD (F)",
-                       axis = "y2",
-                       color = "black") %>%
-    dygraphs::dyLegend(labelsSeparateLines = T,
-                       show = "onmouseover") %>%
-    dygraphs::dyRangeSelector(dateWindow = c("2015-01-01", "2015-12-31"))
-  
-})
-
-```
--->
-
 ## The PFP Field Experiments {.tabset}
 2008--2015. 2008 recorded differently, so only 2009--2015 data presented here. 
 
@@ -515,46 +427,6 @@ shiny::renderPlot({
 
 shiny::downloadLink(outputId = 'download_growth_summaries', label = 'Download growth summary data')
 
-
-# ### And print the table
-# # a custom table container
-# sketch = htmltools::withTags(table(
-#   class = 'display',
-#   thead(
-#     tr(
-#       th(rowspan = 2, 'Measurement Date'),
-#       th(rowspan = 2, 'Garden'),
-#       th(rowspan = 2, 'Variety'),
-#       th(colspan = 6, 'Growth stage')
-#     ),
-#     tr(
-#       lapply(c('Early Tassel Development', 'Tassel Development', 'Tasseling', 'Silk Development', 'Silking', 'Ear Development'), th)
-#     )
-#   )
-# ))
-# 
-# growth_summaries_table <- growth_summaries %>% 
-#   dplyr::mutate(Garden = as.factor(Garden), Date = as.Date(Date)) %>%
-#   dplyr::select(Date, Garden, Variety, `Early Tassel Development`:`Ear Development`,-Season,-Acc_FGDD) %>%
-#   dplyr::arrange(Garden,Date)
-# growth_summaries_table[,4:9] <- apply(X = growth_summaries_table[,4:9],MARGIN = 2,FUN = round,digits=2)
-# 
-# DT::datatable(growth_summaries_table,
-#               extensions = c("Scroller"),
-#               options = list(
-#                 pageLength = 10,
-#                 autoWidth = TRUE,
-#                 searching = FALSE,
-#                 dom = "rftiS",
-#                 scrollCollapse = TRUE,
-#                 scrollY = 400,
-#                 scrollX = FALSE,
-#                 deferRender = TRUE
-#               ),
-#               caption = 'Table 1: Proportion of clumps with plants at growth stages.',
-#               container = sketch,
-#               rownames = FALSE
-# )
 ```
 
 ### Production
@@ -619,25 +491,6 @@ shiny::renderPlot({
 
 shiny::downloadLink(outputId = 'download_ears', label = 'Download ear data')
 
-# ears %>% 
-#   dplyr::mutate(Garden = as.factor(Garden), Season = as.factor(Season)) %>%
-#   dplyr::select(Season, Garden, Variety, `Ear weight`:Rows) %>%
-#   dplyr::arrange(Season,Garden) %>%
-#   dplyr::rename(`Ear weight (g)` = `Ear weight`, `Cob weight (g)` = `Cob weight`, `Kernel weight (g)` = `Kernel weight`) %>%
-#   DT::datatable(
-#     options = list(
-#       pageLength = 10,
-#       autoWidth = TRUE,
-#       searching = FALSE,
-#       dom = "rftiS",
-#       scrollCollapse = TRUE,
-#       scrollY = 400,
-#       scrollX = FALSE,
-#       deferRender = TRUE
-#     ),
-#     caption = 'Table 2: Ear measurements.',
-#     rownames = FALSE
-#   )
 ```
 
 #### Yields through time
