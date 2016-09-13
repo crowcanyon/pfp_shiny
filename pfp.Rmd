@@ -407,15 +407,16 @@ shiny::renderPlot({
     }
     
     p <- p + 
-      ggplot2::geom_line(data=growth_plot, ggplot2::aes(lubridate::as_date(Date), get(input$the_var), group=Garden, colour=get(input$color)))
+      ggplot2::geom_line(data=growth_plot, ggplot2::aes(lubridate::as_date(Date), get(input$the_var), group=Garden, colour=get(input$color))) +
+      ggplot2::xlim(lubridate::as_date(lubridate::mdy(paste0("0501",input$the_year))),lubridate::as_date(lubridate::mdy(paste0("1031",input$the_year))))
     
   }else if(input$x_axis == "Accumulated FGDD"){
     
     p <- p + 
       ggplot2::xlab("Fahrenheit Growing Degree Days since planting") +
       ggplot2::ylab("Proportion of clumps with plants at stage") + 
-      ggplot2::geom_line(data=growth_plot, ggplot2::aes(Acc_FGDD, get(input$the_var), group=Garden, colour=get(input$color)))
-    
+      ggplot2::geom_line(data=growth_plot, ggplot2::aes(Acc_FGDD, get(input$the_var), group=Garden, colour=get(input$color))) +
+      ggplot2::xlim(0,3000)
   }
   
   p <- p +
