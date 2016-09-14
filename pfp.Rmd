@@ -400,7 +400,7 @@ shiny::renderPlot({
     if(input$show_precip){
       p <- p + 
         ggplot2::geom_linerange(data = weather_plot, ggplot2::aes(x=DATE, ymin = 0, ymax = PRCP_IN)) + 
-        ggplot2::ylab("Proportion of clumps with plants at stage\n —and— \n precipitation in Cortez (inches)")
+        ggplot2::ylab("Proportion of clumps with plants at stage\n —and— \n Daily precipitation in Cortez (inches)")
     }else{
       p <- p + ggplot2::ylab("Prop. of clumps with plants at stage")
     }
