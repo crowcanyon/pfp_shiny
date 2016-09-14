@@ -353,7 +353,7 @@ Our first analysis is of maize growth in the gardens over each growing season. G
 ```{r, echo=FALSE}
 shiny::inputPanel(
   shiny::selectInput("the_year", label = "Growing season:",
-                     choices = seq(2009,2016,1), selected = 2009),
+                     choices = 2016:2009, selected = 2016),
   
   shiny::selectInput("the_var", label = "Developmental stage:",
                      choices = c("Early tassel development"="Early Tassel Development","Tassel development"="Tassel Development","Tasseling"="Tasseling","Silk development"="Silk Development","Silking"="Silking","Ear development"="Ear Development")),
@@ -407,7 +407,13 @@ shiny::renderPlot({
     
     p <- p + 
       ggplot2::geom_line(data=growth_plot, ggplot2::aes(lubridate::as_date(Date), get(input$the_var), group=Garden, colour=get(input$color))) +
-      ggplot2::xlim(lubridate::as_date(lubridate::mdy(paste0("0501",input$the_year))),lubridate::as_date(lubridate::mdy(paste0("1031",input$the_year))))
+      ggplot2::scale_x_date(breaks = seq(
+        lubridate::as_date(min(growth_plot$Date)),
+        lubridate::as_date(lubridate::mdy(paste0("1015",input$the_year))),
+        by = '2 weeks'), 
+        date_labels = "%b %d", 
+        limits = c(lubridate::as_date(min(growth_plot$Date)),
+                   lubridate::as_date(lubridate::mdy(paste0("1015",input$the_year)))))
     
   }else if(input$x_axis == "Accumulated FGDD"){
     
@@ -415,7 +421,7 @@ shiny::renderPlot({
       ggplot2::xlab("Fahrenheit Growing Degree Days since planting") +
       ggplot2::ylab("Proportion of clumps with plants at stage") + 
       ggplot2::geom_line(data=growth_plot, ggplot2::aes(Acc_FGDD, get(input$the_var), group=Garden, colour=get(input$color))) +
-      ggplot2::xlim(0,3000)
+      ggplot2::scale_x_continuous(breaks = seq(0,3000,500), limits = c(0,3000))
   }
   
   p <- p +
