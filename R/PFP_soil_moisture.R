@@ -21,6 +21,19 @@ file.copy(from = normalizePath("/Volumes/crow-dfs/Pueblo\ Farming\ Project/WEATH
           overwrite = T,
           recursive = T)
 
+read_moisture <- function(file, garden, location){
+  cols <- readxl::read_excel(file) %>%
+    ncol()
+  if(cols == 7){
+    out <- readxl::read_excel(path = file, skip = 3, col_names = c("Time","VWC_15","Temp_15","VWC_30","Temp_30","VWC_45","Temp_45"), col_types = c("date",rep("numeric",6)))
+  }else{
+    out <- readxl::read_excel(path = file, skip = 3, col_names = c("Time","VWC_15","Temp_15","VWC_30","Temp_30","VWC_45","Temp_45", paste0("X",1:(cols-7))), col_types = c("date",rep("numeric",cols-1)))
+  }
+    out %<>% dplyr::select(1:7) %>%
+    dplyr::mutate(Location = location, Garden = garden)
+    return(out)
+}
+
 # Read in soil moisture data for each garden
 locs <- c("NW","NE","SE")
 cdg <- lapply(locs, function(loc){
@@ -31,13 +44,10 @@ cdg <- lapply(locs, function(loc){
                                                pattern = "xls",
                                                full.names = T),
          value = T),
-    readxl::read_excel,
-    col_names = c("Time","VWC_15","Temp_15","VWC_30","Temp_30","VWC_45","Temp_45","none"),
-    col_types = c("date",rep("numeric",7)),
-    skip = 3) %>%
-    dplyr::bind_rows() %>%
-    dplyr::select(-none) %>%
-    dplyr::mutate(Location = loc, Garden = "CDG")
+    read_moisture,
+    garden = "CDG",
+    location = loc) %>%
+    dplyr::bind_rows()
 }) %>%
   dplyr::bind_rows()
 
@@ -46,26 +56,20 @@ mcg <- lapply(
              recursive = T,
              pattern = "xls",
              full.names = T),
-  readxl::read_excel,
-  col_names = c("Time","VWC_15","Temp_15","VWC_30","Temp_30","VWC_45","Temp_45","none"),
-  col_types = c("date",rep("numeric",7)),
-  skip = 3) %>%
-  dplyr::bind_rows() %>%
-  dplyr::select(-none) %>%
-  dplyr::mutate(Location = NA, Garden = "MCG")
+  read_moisture,
+  garden = "MCG",
+  location = NA) %>%
+  dplyr::bind_rows()
 
 plc <- lapply(
   list.files("../DATA/UNT\ Moisture\ Monitors/PLC_Garden",
              recursive = T,
              pattern = "xls",
              full.names = T),
-  readxl::read_excel,
-  col_names = c("Time","VWC_15","Temp_15","VWC_30","Temp_30","VWC_45","Temp_45","none"),
-  col_types = c("date",rep("numeric",7)),
-  skip = 3) %>%
-  dplyr::bind_rows() %>%
-  dplyr::select(-none) %>%
-  dplyr::mutate(Location = NA, Garden = "PLC")
+  read_moisture,
+  garden = "PLC",
+  location = NA) %>%
+  dplyr::bind_rows()
 
 # Combine all gardens, and find average of each day.
 soil_moisture <- dplyr::bind_rows(cdg,mcg,plc) %>%

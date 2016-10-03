@@ -22,6 +22,8 @@ The Pueblo Farming Project, or PFP, is a collaboration between the Hopi tribe an
 library(dplyr)
 library(lubridate)
 library(sp)
+library(leaflet)
+library(dygraphs)
 # library(plotly)
 
 ## Load the data, processed by PFP_data_prep.R

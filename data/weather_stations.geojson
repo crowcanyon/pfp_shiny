@@ -1,11 +1,12 @@
 {
 "type": "FeatureCollection",
+                                                                                
 "features": [
-{ "type": "Feature", "id": 1, "properties": { "ID": "CCAC_1", "Abbreviation": "East_Hill", "Description": "East end of Crow Canyon property (in third juniper to the south of the path along the fence line. Flattened metal piece at base of tree.)" }, "geometry": { "type": "Point", "coordinates": [ -108.614356265779051, 37.356336615022258 ] } },
-{ "type": "Feature", "id": 2, "properties": { "ID": "CCAC_2", "Abbreviation": "PLC", "Description": "PLC Garden (in pine tree just to the east of the garden)" }, "geometry": { "type": "Point", "coordinates": [ -108.61629371906136, 37.356114348933644 ] } },
-{ "type": "Feature", "id": 3, "properties": { "ID": "CCAC_3", "Abbreviation": "POG", "Description": "Paul's Old Garden, in NE corner inside garden" }, "geometry": { "type": "Point", "coordinates": [ -108.618149058164065, 37.355989528678371 ] } },
-{ "type": "Feature", "id": 4, "properties": { "ID": "CCAC_4", "Abbreviation": "PHG", "Description": "Pithouse Garden (on north side of tree closest to pithouse)" }, "geometry": { "type": "Point", "coordinates": [ -108.622245447118033, 37.353891081031634 ] } },
-{ "type": "Feature", "id": 5, "properties": { "ID": "CCAC_5", "Abbreviation": "KUG", "Description": "Karen's Old Garden" }, "geometry": { "type": "Point", "coordinates": [ -108.625339282057226, 37.353151195543255 ] } },
-{ "type": "Feature", "id": 6, "properties": { "ID": "CCAC_11", "Abbreviation": "CDG", "Description": "Near Check Dam Garden" }, "geometry": { "type": "Point", "coordinates": [ -108.617040364696336, 37.354993887421081 ] } }
+{ "type": "Feature", "id": 1, "properties": { "ID": "CCAC_1", "Abbreviation": "East_Hill", "Description": "East end of Crow Canyon property (in third juniper to the south of the path along the fence line. Flattened metal piece at base of tree.)" }, "geometry": { "type": "Point", "coordinates": [ -108.61435626577989, 37.356336615034749 ] } },
+{ "type": "Feature", "id": 2, "properties": { "ID": "CCAC_2", "Abbreviation": "PLC", "Description": "PLC Garden (in pine tree just to the east of the garden)" }, "geometry": { "type": "Point", "coordinates": [ -108.616293719062199, 37.356114348946086 ] } },
+{ "type": "Feature", "id": 3, "properties": { "ID": "CCAC_3", "Abbreviation": "POG", "Description": "Paul's Old Garden, in NE corner inside garden" }, "geometry": { "type": "Point", "coordinates": [ -108.618149058164903, 37.355989528690763 ] } },
+{ "type": "Feature", "id": 4, "properties": { "ID": "CCAC_4", "Abbreviation": "PHG", "Description": "Pithouse Garden (on north side of tree closest to pithouse)" }, "geometry": { "type": "Point", "coordinates": [ -108.622245447118857, 37.353891081043912 ] } },
+{ "type": "Feature", "id": 5, "properties": { "ID": "CCAC_5", "Abbreviation": "KUG", "Description": "Karen's Old Garden" }, "geometry": { "type": "Point", "coordinates": [ -108.625339282058036, 37.353151195555441 ] } },
+{ "type": "Feature", "id": 6, "properties": { "ID": "CCAC_11", "Abbreviation": "CDG", "Description": "Near Check Dam Garden" }, "geometry": { "type": "Point", "coordinates": [ -108.617040364697161, 37.354993887433494 ] } }
 ]
 }

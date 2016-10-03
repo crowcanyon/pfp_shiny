@@ -7,7 +7,7 @@ FedData::pkg_test("readr")
 FedData::pkg_test("sp")
 FedData::pkg_test("zoo")
 FedData::pkg_test("scales")
-FedData::pkg_test("bocinsky/PaleoCAR")
+FedData::pkg_test("bocinsky/paleocar")
 
 # Suppress scientific notation
 options(scipen=999)
@@ -42,7 +42,7 @@ PFP_data$`tbl growth`$Date <- PFP_data$`tbl growth`$Date %>%
 
 # A function to make a logical column monotonic
 make_mono <- function(x){
-  return(as.logical(stats::filter(PaleoCAR::makeMonotonic(x,decreasing=F),filter=1, method="recursive")-1))
+  return(as.logical(stats::filter(paleocar:::make_monotonic(x,decreasing=F),filter=1, method="recursive")-1))
 }
 
 # Fill in the missing clump observations with NAs 
@@ -59,16 +59,19 @@ for(g in unique(PFP_data$`tbl growth`$Garden)){
     sub <- PFP_data_growth %>%
       dplyr::filter(Season == y) %>%
       dplyr::select(-Season)
+    
     this.gardens <- gardens %>%
       dplyr::filter(Garden == g, Season == y)
+    
     vals <- expand.grid(Date = sort(c((this.gardens %>%
                                          dplyr::select(PlantingDate))[[1]],
                                       lubridate::as_date(unique(sub$Date)))),
-    Garden = g,
-    Clump = 1:(this.gardens %>%
-                 dplyr::select(Clumps) %>%
-                 unlist() %>%
-                 as.numeric()))
+                        Garden = g,
+                        Clump = 1:(this.gardens %>%
+                               dplyr::select(Clumps) %>%
+                               unlist() %>%
+                               as.numeric())
+    )
     
     PFP_data$`tbl growth` <- merge(PFP_data$`tbl growth`, vals, all=T)
   }
@@ -97,6 +100,7 @@ readr::write_csv(growth,"./data/growth.csv")
 # Summarize growth data into proportions of clumps to reach developmental stages
 growth_summaries <- growth %>%
   dplyr::group_by(Date, Garden) %>%
+  dplyr::filter(Thinned == 0) %>%
   dplyr::summarise(`Early Tassel Development` = mean(`Early Tassel Development`), `Tassel Development` = mean(`Tassel Development`), `Tasseling` = mean(`Tasseling`), `Silk Development` = mean(`Silk Development`),`Silking` = mean(`Silking`), `Ear Development` = mean(`Ear Development`)) %>%
   dplyr::mutate(Season = year(Date)) %>%
   dplyr::filter(Season %in% seasons) %>% # Only keep years 2009:2015
@@ -108,9 +112,8 @@ garden_years <- growth_summaries %>%
   dplyr::select(Date,Garden) %>%
   dplyr::mutate(Date = year(Date)) %>%
   dplyr::filter(Date %in% seasons) %>% # Only keep years 2009:2015
-  unique() %>%
-  bind_rows(data_frame(Date = 2015,Garden = "MCG"))
-  
+  unique()
+
 
 ranges <- function(x){
   x <- sort(x)
@@ -146,7 +149,7 @@ gardens <- readr::read_csv("./data/gardens.csv")
 
 ## (Down)load the weather station data for Cortez
 cortez_weather <- c(FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("TMIN","TMAX"), standardize = T, raw.dir = "../DATA/GHCN"),FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("PRCP"), raw.dir = "../DATA/GHCN")) %>%
-  station_to_data_frame() %>%
+  FedData::station_to_data_frame() %>%
   dplyr::as_data_frame() %>%
   dplyr::filter(year(DATE) %in% seasons) %>%
   dplyr::mutate(DATE = lubridate::ymd(DATE),
@@ -184,9 +187,9 @@ for(g in unique(growth_summaries$Garden)){
     PFP_data_growth_year$Acc_FGDD <- cortez_weather %>%
       dplyr::filter(year(DATE) == y, 
                     DATE >= gardens_year$PlantingDate) %>%
-#       dplyr::filter(Location == (weather_station_IDs %>% dplyr::filter(Abbreviation == g))$ID, 
-#                     year(Date_Time) == y, 
-#                     Date_Time >= gardens_year$PlantingDate) %>%
+      #       dplyr::filter(Location == (weather_station_IDs %>% dplyr::filter(Abbreviation == g))$ID, 
+      #                     year(Date_Time) == y, 
+      #                     Date_Time >= gardens_year$PlantingDate) %>%
       dplyr::mutate(Acc_FGDD = cumsum(FGDD)) %>%
       dplyr::filter(DATE %in% lubridate::as_date(PFP_data_growth_year$Date)) %>%
       dplyr::select(Acc_FGDD) %>%
