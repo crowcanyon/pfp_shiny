@@ -42,7 +42,7 @@ PFP_data$`tbl growth`$Date <- PFP_data$`tbl growth`$Date %>%
 
 # A function to make a logical column monotonic
 make_mono <- function(x){
-  return(as.logical(stats::filter(paleocar:::make_monotonic(x,decreasing=F),filter=1, method="recursive")-1))
+  return(as.logical(stats::filter(x,filter=1, method="recursive")))
 }
 
 # Fill in the missing clump observations with NAs 
@@ -81,16 +81,43 @@ PFP_data$`tbl growth` <- dplyr::tbl_df(PFP_data$`tbl growth`)
 
 # Recode variables and make them monotonic within groups
 growth <- PFP_data$`tbl growth` %>%
-  dplyr::rename(`Early Tassel Development`=ETD, `Tassel Development`=TD, `Tasseling`=T, `Silk Development`=SD, `Silking`=S, `Ear Development`=ED) %>%
+  dplyr::mutate(Clump = ifelse(Clump == 120,12,Clump)) %>% # Temporary fix
+  dplyr::mutate(Removed = ifelse(Comments == "Previously thinned to zero.",1,Removed)) %>% # Temporary fix
+  dplyr::filter(Removed != 1) %>%
+  dplyr::rename(`Early Tassel Development` = ETD,
+                `Tassel Development` = TD,
+                `Tasseling` = `T`,
+                `Silk Development` = SD,
+                `Silking` = S,
+                `Ear Development` = ED) %>%
   # dplyr::select(Date,Garden,Clump,`Early Tassel Development`,`Tassel Development`,`Tasseling`,`Silk Development`,`Silking`,`Ear Development`) %>%
   dplyr::arrange(Date) %>%
-  dplyr::mutate(`Early Tassel Development` = as.logical(`Early Tassel Development`),`Tassel Development` = as.logical(`Tassel Development`), `Tasseling`=as.logical(`Tasseling`), `Silk Development` = as.logical(`Silk Development`), `Silking` = as.logical(`Silking`), `Ear Development` = as.logical(`Ear Development`)) %>%
-  dplyr::mutate(`Early Tassel Development` = ifelse(is.na(`Early Tassel Development`),FALSE,`Early Tassel Development`),`Tassel Development` = ifelse(is.na(`Tassel Development`),FALSE,`Tassel Development`), `Tasseling` = ifelse(is.na(`Tasseling`),FALSE,`Tasseling`), `Silk Development` = ifelse(is.na(`Silk Development`),FALSE,`Silk Development`), `Silking` = ifelse(is.na(`Silking`),FALSE,`Silking`), `Ear Development` = ifelse(is.na(`Ear Development`),FALSE,`Ear Development`)) %>%
-  dplyr::mutate(`Silking` = ifelse(`Ear Development`,TRUE,`Silking`),`Silk Development` = ifelse(`Silking`,TRUE,`Silk Development`),`Tasseling`=ifelse(`Silk Development`,TRUE,`Tasseling`), `Tassel Development` = ifelse(`Tasseling`,TRUE,`Tassel Development`),`Early Tassel Development` = ifelse(`Tassel Development`,TRUE,`Early Tassel Development`)) %>%
+  dplyr::mutate(`Early Tassel Development` = as.logical(`Early Tassel Development`),
+                `Tassel Development` = as.logical(`Tassel Development`),
+                `Tasseling` = as.logical(`Tasseling`),
+                `Silk Development` = as.logical(`Silk Development`),
+                `Silking` = as.logical(`Silking`),
+                `Ear Development` = as.logical(`Ear Development`)) %>%
+  dplyr::mutate(`Early Tassel Development` = ifelse(is.na(`Early Tassel Development`),FALSE,`Early Tassel Development`),
+                `Tassel Development` = ifelse(is.na(`Tassel Development`),FALSE,`Tassel Development`),
+                `Tasseling` = ifelse(is.na(`Tasseling`),FALSE,`Tasseling`),
+                `Silk Development` = ifelse(is.na(`Silk Development`),FALSE,`Silk Development`),
+                `Silking` = ifelse(is.na(`Silking`),FALSE,`Silking`),
+                `Ear Development` = ifelse(is.na(`Ear Development`),FALSE,`Ear Development`)) %>%
+  dplyr::mutate(`Silking` = ifelse(`Ear Development`,TRUE,`Silking`),
+                `Silk Development` = ifelse(`Silking`,TRUE,`Silk Development`),
+                `Tasseling`=ifelse(`Silk Development`,TRUE,`Tasseling`),
+                `Tassel Development` = ifelse(`Tasseling`,TRUE,`Tassel Development`),
+                `Early Tassel Development` = ifelse(`Tassel Development`,TRUE,`Early Tassel Development`)) %>%
   dplyr::mutate(Season = year(Date)) %>%
   dplyr::filter(Season %in% seasons) %>% # Only keep years 2009:2015
   dplyr::group_by(Season, Garden, Clump) %>% 
-  dplyr::mutate(`Early Tassel Development` = make_mono(`Early Tassel Development`),`Tassel Development` = make_mono(`Tassel Development`), `Tasseling`=make_mono(`Tasseling`), `Silk Development` = make_mono(`Silk Development`), `Silking` = make_mono(`Silking`), `Ear Development` = make_mono(`Ear Development`)) %>%
+  dplyr::mutate(`Early Tassel Development` = make_mono(`Early Tassel Development`),
+                `Tassel Development` = make_mono(`Tassel Development`),
+                `Tasseling` = make_mono(`Tasseling`),
+                `Silk Development` = make_mono(`Silk Development`),
+                `Silking` = make_mono(`Silking`),
+                `Ear Development` = make_mono(`Ear Development`)) %>%
   dplyr::ungroup() %>%
   dplyr::left_join(y = (gardens %>% dplyr::select(Season,Garden,Variety)), by = c("Season","Garden"))
 
@@ -100,8 +127,12 @@ readr::write_csv(growth,"./data/growth.csv")
 # Summarize growth data into proportions of clumps to reach developmental stages
 growth_summaries <- growth %>%
   dplyr::group_by(Date, Garden) %>%
-  dplyr::filter(Thinned == 0) %>%
-  dplyr::summarise(`Early Tassel Development` = mean(`Early Tassel Development`), `Tassel Development` = mean(`Tassel Development`), `Tasseling` = mean(`Tasseling`), `Silk Development` = mean(`Silk Development`),`Silking` = mean(`Silking`), `Ear Development` = mean(`Ear Development`)) %>%
+  dplyr::summarise(`Early Tassel Development` = mean(`Early Tassel Development`),
+                   `Tassel Development` = mean(`Tassel Development`),
+                   `Tasseling` = mean(`Tasseling`),
+                   `Silk Development` = mean(`Silk Development`),
+                   `Silking` = mean(`Silking`),
+                   `Ear Development` = mean(`Ear Development`)) %>%
   dplyr::mutate(Season = year(Date)) %>%
   dplyr::filter(Season %in% seasons) %>% # Only keep years 2009:2015
   dplyr::left_join(y = (gardens %>% dplyr::select(Season,Garden,Variety)), by = c("Season","Garden")) %>%
@@ -144,27 +175,10 @@ unlink('./data/gardens')
 rgdal::writeOGR(garden_locations,dsn='./data/gardens',layer="gardens",driver="GeoJSON",overwrite=T)
 file.rename('./data/gardens','./data/gardens.geojson')
 
-source("./src/calc_gdd.R")
 gardens <- readr::read_csv("./data/gardens.csv")
 
-## (Down)load the weather station data for Cortez
-cortez_weather <- c(FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("TMIN","TMAX"), standardize = T, raw.dir = "../DATA/GHCN"),FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("PRCP"), raw.dir = "../DATA/GHCN")) %>%
-  FedData::station_to_data_frame() %>%
-  dplyr::as_data_frame() %>%
-  dplyr::filter(year(DATE) %in% seasons) %>%
-  dplyr::mutate(DATE = lubridate::ymd(DATE),
-                TMIN = zoo::na.approx(TMIN/10, na.rm = F),
-                TMAX = zoo::na.approx(TMAX/10, na.rm = F),
-                FGDD = calc_gdd(tmin = TMIN, tmax = TMAX, t.base=10, t.cap=30, to_fahrenheit=T),
-                TMAX = ((TMAX)*1.8 + 32),
-                TMIN = ((TMIN)*1.8 + 32),
-                PRCP = PRCP*0.00393701) %>%
-  dplyr::rename(TMAX_F = TMAX, TMIN_F = TMIN, PRCP_IN = PRCP)
-
-readr::write_csv(cortez_weather,"./data/cortez_weather.csv")
-
 weather_stations <- readr::read_csv("./data/weather_stations.csv") %>%
-  dplyr::mutate(Date_Time = lubridate::round_date(Date_Time,"day"))
+  dplyr::mutate(DATE = lubridate::round_date(DATE,"day"))
 weather_station_IDs <- rgdal::readOGR(dsn = "./data/weather_stations.geojson", "OGRGeoJSON", verbose = FALSE, stringsAsFactors = F)@data %>%
   as_data_frame()
 
@@ -184,9 +198,10 @@ for(g in unique(growth_summaries$Garden)){
       dplyr::filter(Garden == g, Season == y)
     PFP_data_growth_year <- PFP_data_growth %>%
       dplyr::filter(year(Date) == y)
-    PFP_data_growth_year$Acc_FGDD <- cortez_weather %>%
+    PFP_data_growth_year$Acc_FGDD <- weather_stations %>%
       dplyr::filter(year(DATE) == y, 
-                    DATE >= gardens_year$PlantingDate) %>%
+                    DATE >= gardens_year$PlantingDate,
+                    Location == "Cortez") %>%
       #       dplyr::filter(Location == (weather_station_IDs %>% dplyr::filter(Abbreviation == g))$ID, 
       #                     year(Date_Time) == y, 
       #                     Date_Time >= gardens_year$PlantingDate) %>%
@@ -201,6 +216,8 @@ for(g in unique(growth_summaries$Garden)){
 }
 readr::write_csv(growth_summaries,"./data/growth_summaries.csv")
 
+growth_summaries %>%
+  filter(Garden == "MCG")
 
 # weather_stations %>%
 #   dplyr::filter(Location == (weather_station_IDs %>% dplyr::filter(Abbreviation == g))$ID) %>%

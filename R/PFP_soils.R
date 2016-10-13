@@ -72,11 +72,11 @@ soils$area <- rgeos::gArea(spTransform(soils,CRS("+proj=utm +datum=NAD83 +zone=1
 
 soils$Popup <- paste0("<b>",soils$muname,"</b><br/>",
                       "<p>Mapunit area: ",round(soils$area) * 0.0001," ha<br/>",
-                      # "Average annual NPP: ",round(soils$NPP * 1.12085)," kg/ha<br/>",
-                      # "Average bean yield: ",round(soils$bean_yield * 1.12085)," kg/ha<br/>",
-                      # "AWC, 0–6 inches: ",round(soils$upper_awc, digits=2)," inches<br/>",
-                      # "AWC, 6–60 inches: ",round(soils$lower_awc, digits=2)," inches<br/>",
-                      # "Hand-planting multiplier: ",round(soils$SCM_RED, digits=2),
+                      "Average annual NPP: ",round(soils$NPP * 1.12085)," kg/ha<br/>",
+                      "Average bean yield: ",round(soils$bean_yield * 1.12085)," kg/ha<br/>",
+                      "AWC, 0–6 inches: ",round(soils$upper_awc, digits=2)," inches<br/>",
+                      "AWC, 6–60 inches: ",round(soils$lower_awc, digits=2)," inches<br/>",
+                      "Hand-planting multiplier: ",round(soils$SCM_RED, digits=2),
                       "</p>")
 
 soils@data <- soils@data %>%
