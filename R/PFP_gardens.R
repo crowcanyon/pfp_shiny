@@ -81,8 +81,6 @@ PFP_data$`tbl growth` <- dplyr::tbl_df(PFP_data$`tbl growth`)
 
 # Recode variables and make them monotonic within groups
 growth <- PFP_data$`tbl growth` %>%
-  dplyr::mutate(Clump = ifelse(Clump == 120,12,Clump)) %>% # Temporary fix
-  dplyr::mutate(Removed = ifelse(Comments == "Previously thinned to zero.",1,Removed)) %>% # Temporary fix
   dplyr::filter(Removed != 1) %>%
   dplyr::rename(`Early Tassel Development` = ETD,
                 `Tassel Development` = TD,
