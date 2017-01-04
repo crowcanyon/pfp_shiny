@@ -5,6 +5,9 @@ FedData::pkg_test("dplyr")
 FedData::pkg_test("magrittr")
 FedData::pkg_test("readxl")
 FedData::pkg_test("ggplot2")
+FedData::pkg_test("zoo")
+FedData::pkg_test("lubridate")
+FedData::pkg_test("tidyverse")
 
 # Suppress scientific notation
 options(scipen=999)
@@ -80,7 +83,7 @@ weather_stations %<>% dplyr::mutate(Location = locs)
 cortez_weather <- c(FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("TMIN","TMAX"), standardize = T, raw.dir = "../DATA/GHCN"),FedData::get_ghcn_daily_station(ID="USC00051886", elements = c("PRCP"), raw.dir = "../DATA/GHCN")) %>%
   FedData::station_to_data_frame() %>%
   dplyr::as_data_frame() %>%
-  dplyr::filter(year(DATE) %in% seasons) %>%
+  dplyr::filter(lubridate::year(DATE) %in% seasons) %>%
   dplyr::mutate(DATE = lubridate::ymd(DATE),
                 TMIN = zoo::na.approx(TMIN/10, na.rm = F),
                 TMAX = zoo::na.approx(TMAX/10, na.rm = F),

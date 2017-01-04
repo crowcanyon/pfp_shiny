@@ -1,7 +1,7 @@
 library(FedData)
 FedData::pkg_test("Hmisc")
 FedData::pkg_test("ggplot2")
-FedData::pkg_test("dplyr")
+FedData::pkg_test("dtplyr")
 FedData::pkg_test("lubridate")
 FedData::pkg_test("readr")
 FedData::pkg_test("sp")
@@ -15,9 +15,10 @@ options(scipen=999)
 ## Data munging part of the script. Run once to output clean CSVs
 
 ## Read in the PFP data directly from the PFP results database
+unlink("../DATA/Pueblo Farmers Project database.mdb", recursive = TRUE, force = TRUE)
 file.copy(from = "/Volumes/crow-dfs/Pueblo Farming Project/DATA/Pueblo Farmers Project database.mdb",
           to="../DATA/Pueblo Farmers Project database.mdb",
-          overwrite=T)
+          overwrite = TRUE)
 # file.copy(from = "/Volumes/Crow-DFS/Pueblo Farming Project/Documentation Forms and Data/Pueblo Farmers Project database.mdb",
 #           to="../DATA/Pueblo Farmers Project database.mdb",
 #           overwrite=T)

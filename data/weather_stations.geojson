@@ -1,6 +1,5 @@
 {
 "type": "FeatureCollection",
-                                                                                
 "features": [
 { "type": "Feature", "id": 1, "properties": { "ID": "CCAC_1", "Abbreviation": "East_Hill", "Description": "East end of Crow Canyon property (in third juniper to the south of the path along the fence line. Flattened metal piece at base of tree.)" }, "geometry": { "type": "Point", "coordinates": [ -108.61435626577989, 37.356336615034749 ] } },
 { "type": "Feature", "id": 2, "properties": { "ID": "CCAC_2", "Abbreviation": "PLC", "Description": "PLC Garden (in pine tree just to the east of the garden)" }, "geometry": { "type": "Point", "coordinates": [ -108.616293719062199, 37.356114348946086 ] } },

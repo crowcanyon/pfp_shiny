@@ -55,20 +55,21 @@ A series of grants has funded the PFP, which began in the fall of 2007 when Hopi
 
 Planting and harvesting began in 2008 and has continued every year since, although not every garden was planted every year. In 2008, Hopi farmers brought 15 different varieties of maize to Crow Canyon. After discussion, we selected blue, white, sweet, greasy head, and Kachina corn for planting. Since 2011 we have focused on blue and white corn exclusively. We used the Hopi seed during the first year but seed from our harvests since then. Hopi farmers provided instructions on how to plant, tend, and harvest the corn, how to control for pests, and other information.  Hopi farming practices include starting with about 12 plants per clump, planting deep, having wide spacing between clumps so there is no competition for soil moisture, and thinning the clump to about six plants when they are knee high.
 
-### Who
-PFP participants. Photos. 
+<!-- ### Who -->
+<!-- PFP participants. Photos.  -->
 
 ### What
 The Hopi farmers have a keen interest in determining whether their farming methods work in the Mesa Verde region, an area they consider as a part of their traditional homeland. Even though they no longer rely on corn for the bulk of their food, corn and corn farming remain central to Hopi lifeways today. For the Hopi, the PFP links their present-day lives and culture to their history and their ancestors, and this is of paramount importance to them. 
 
 For Crow Canyon, the PFP contributes to both our humanistic and scientific understanding of Pueblo farming, and we incorporate the PFP results into both our education and research programs.  PFP scientific goals are many and diverse, but today I’ll focus on the goals of understanding how environmental factors affect corn growth and using this knowledge to estimate ancestral Pueblo corn farming yields.  
 
-The PFP collects detailed information about soils, records annual variation in precipitation and temperature, and, in a new partnership with the University of North Texas, takes measurements of soil moisture and soil temperature. Each week we also record the height of the plants and make observations on when the following growth stages occur: early tassel development, tassel development, tasseling, silk development, silking, and ear development.
+The PFP collects detailed information about soils, records annual variation in precipitation and temperature, and, in a partnership with the University of North Texas funded by the National Science Foundation (BCS-1460122), takes measurements of soil moisture and soil temperature. Each week we also record the height of the plants and make observations on when the following growth stages occur: early tassel development, tassel development, tasseling, silk development, silking, and ear development.
 
 ### Where
 Five PFP gardens are scattered around Crow Canyon Archaeological Center's rural campus in Cortez, Colorado. Click on the markers to explore the gardens!
 
 In 2015, we planted a new garden in the "bean fields" north of Crow Canyon's campus. This garden, called the Mike Coffey Garden (named after our friend Mike who donated the land for use to farm), is much higher in elevation than the Crow Canyon gardens.
+
 ```{r, echo=FALSE}
 garden_locations@data <- cbind(garden_locations@data, rgeos::gCentroid(garden_locations, byid=T)@coords)
 
@@ -88,23 +89,23 @@ gardens_m  # Print the map
 
 ```
 
-### When
-2008--2016
+<!-- ### When -->
+<!-- 2008--2016 -->
 
 ## How corn grows {.tabset}
-Basics of corn phenology. Parts of corn. Growth stages.
+<!-- Basics of corn phenology. Parts of corn. Growth stages. -->
 
-### Variety
-Landraces. Hopi varieties. Selection.
+<!-- ### Variety -->
+<!-- Landraces. Hopi varieties. Selection. -->
 
-### Cultivation
-Technologies. Rain-fed. Water management.
+<!-- ### Cultivation -->
+<!-- Technologies. Rain-fed. Water management. -->
 
 ### Soil
-Nutrients. Water. Direct-precipitation (rain-fed) farming.
+<!-- Nutrients. Water. Direct-precipitation (rain-fed) farming. -->
 
 #### Soils in the PFP gardens
-NRCS SSURGO soils. Comparison with surrounding area, including ICR.
+<!-- NRCS SSURGO soils. Comparison with surrounding area, including ICR. -->
 
 ```{r, echo = FALSE}
 ## Define the display layers
@@ -168,8 +169,9 @@ yields_m  # Print the map
 ```
 
 #### Soil moisture and temperature
-UNT project. Soil moisture for photosynthesis. Temperature for seedling development.
+<!-- UNT project. Soil moisture for photosynthesis. Temperature for seedling development. -->
 
+These data were collected in collaboration with the Lisa Nagaoka and Steve Wolverton of the University of North Texas as part of collaborative research funded by the National Science Foundation (BCS-1460122).
 ```{r, echo=FALSE}
 shiny::inputPanel(
   shiny::selectInput("the_var_soil_moisture", label = "Soil measurement:",
@@ -265,16 +267,16 @@ shiny::renderPlot({
   
 }, width = "auto", height = 450)
 
-shiny::downloadLink(outputId = 'download_soil_moisture', label = 'Download soil moisture data')
+# shiny::downloadLink(outputId = 'download_soil_moisture', label = 'Download soil moisture data')
 
 ```
 
 
 ### Weather
-Precipitation and temperature. Local. Cold air drainage.
+<!-- Precipitation and temperature. Local. Cold air drainage. -->
 
 #### Measuring accumulated heat---GDD
-What is a GDD? Equation. Heat and photosynthesis. GDD needs of traditional and modern corn varieties. Killing Degree Days?
+<!-- What is a GDD? Equation. Heat and photosynthesis. GDD needs of traditional and modern corn varieties. Killing Degree Days? -->
 
 The equation for daily GDD is:
 $$ GDD=\frac{T_{MAX} + T_{MIN}}{2}-T_{BASE} $$
@@ -291,7 +293,7 @@ $$
 GDDs can be converted from Celcius heat units to Fahrenheit heat units by multiplying by a factor of 1.8.
 
 #### Weather in Cortez
-Weather station location. Cooperative (COOP) database. GHCN. Cortez station graph.
+<!-- Weather station location. Cooperative (COOP) database. GHCN. Cortez station graph. -->
 
 ```{r, echo=FALSE}
 cortez_weather_dy <- weather_stations %>%
@@ -391,7 +393,7 @@ shiny::inputPanel(
 ```
 
 ## The PFP Field Experiments {.tabset}
-2008--2015. 2008 recorded differently, so only 2009--2015 data presented here. 
+<!-- 2008--2015. 2008 recorded differently, so only 2009--2015 data presented here.  -->
 
 ### Growth
 Our first analysis is of maize growth in the gardens over each growing season. Growth is measured as the proportion of clumps with plants reaching a particular growth stage, at a particular point in time. Select a year and a growth stage, and choose whether you'd like the date or the accumulated Fahrenheit growing degree days (FGDDs) to plot on the horizontal axis.
@@ -482,10 +484,10 @@ shiny::downloadLink(outputId = 'download_growth_summaries', label = 'Download gr
 ```
 
 ### Production
-Graphs like those that Dylan produced, showing variation over seasons. 
+<!-- Graphs like those that Dylan produced, showing variation over seasons.  -->
 
 #### Ear diversity
-How big were the ears, given different corn types and different gardens? What is a distribution? How to read a box plot.
+<!-- How big were the ears, given different corn types and different gardens? What is a distribution? How to read a box plot. -->
 
 ```{r, echo=FALSE}
 
@@ -546,7 +548,7 @@ shiny::downloadLink(outputId = 'download_ears', label = 'Download ear data')
 ```
 
 #### Yields through time
-How much corn could have been expected in larger fields? How much corn would be needed to feed a family? How many fields?
+<!-- How much corn could have been expected in larger fields? How much corn would be needed to feed a family? How many fields? -->
 
 ```{r, echo=FALSE}
 
@@ -617,55 +619,55 @@ shiny::downloadLink(outputId = 'download_yields', label = 'Download yield data')
 
 ```
 
-## What have we learned? {.tabset}
-Review research questions. 
+<!-- ## What have we learned? {.tabset} -->
+<!-- Review research questions. -->
 
-### Mesa Verde
-Hopi corn grows well in the CMV. Might be even better up in high areas during warm years. 
+<!-- ### Mesa Verde -->
+<!-- Hopi corn grows well in the CMV. Might be even better up in high areas during warm years.  -->
 
-### Ancient yields?
-Highly variable. People would have adapted to local environment. How quickly would people adapt? How quickly would corn adapt?
-
-
+<!-- ### Ancient yields? -->
+<!-- Highly variable. People would have adapted to local environment. How quickly would people adapt? How quickly would corn adapt? -->
 
 
-SLIDE 26 Kyle Bocinsky and others are developing a web tool to let researchers explore these data, and we will develop an educational version to teach students about data analysis, plant phenology, and the relationships between plant growth and the environment.  The opening page shows a satellite image of Crow Canyon’s campus and the garden locations; this image zooms in or out and toggles between the satellite image and topography.
 
 
-SLIDE 27 Next the web tool explores corn growth; this particular screenshot shows when tassel development occurred in each garden in 2011. The x-axis is time, the y-axis the proportion of clumps in each garden that have reached early tassel development, and the black bars show the timing and amount of precipitation. Each of these is a pull down menu SLIDE 28 and this shows how you can create a different graph for each growth stage. The other menus let you select each year from 2008 to 2015; set the x-axis to either date or the accumulated Fahrenheit growing degree days; and view results by garden or by maize variety. 
+<!-- SLIDE 26 Kyle Bocinsky and others are developing a web tool to let researchers explore these data, and we will develop an educational version to teach students about data analysis, plant phenology, and the relationships between plant growth and the environment.  The opening page shows a satellite image of Crow Canyon’s campus and the garden locations; this image zooms in or out and toggles between the satellite image and topography. -->
 
 
-SLIDE 29 Next the web tool examines the weight of the harvested ears, with these boxplots illustrating the weight distribution of the harvested ears from each garden in 2015. In this image, the weight of shelled kernels from each ear is shown; however this menu lets you select kernel weight, ear weight, or cob weight. This graph shows that in 2015 the kernel weight was similar the four Crow Canyon gardens, but the Mike Coffey garden had weights per ear more than double those at Crow Canyon. These data are available for each year, and the results can be examined by garden, shown here, or by maize variety, SLIDE 30 as seen in this image. These box plots show that there is little difference between varieties; instead it is differences in the local conditions of each garden that account for the variation in the weight of the ears.
+<!-- SLIDE 27 Next the web tool explores corn growth; this particular screenshot shows when tassel development occurred in each garden in 2011. The x-axis is time, the y-axis the proportion of clumps in each garden that have reached early tassel development, and the black bars show the timing and amount of precipitation. Each of these is a pull down menu SLIDE 28 and this shows how you can create a different graph for each growth stage. The other menus let you select each year from 2008 to 2015; set the x-axis to either date or the accumulated Fahrenheit growing degree days; and view results by garden or by maize variety.  -->
 
 
-SLIDE 31 This next plot examines the yields as kilograms per hectare through time. The menus let you examine kernel weight or ear weight, and let you look at yields by corn variety or by garden. This plot illustrates significant variation in yields from garden to garden and year to year. The amount of annual precipitation is shown beneath each year, and this can be compared to the long-term average. Five of eight years had below-average precipitation, while three years were above average. 
+<!-- SLIDE 29 Next the web tool examines the weight of the harvested ears, with these boxplots illustrating the weight distribution of the harvested ears from each garden in 2015. In this image, the weight of shelled kernels from each ear is shown; however this menu lets you select kernel weight, ear weight, or cob weight. This graph shows that in 2015 the kernel weight was similar the four Crow Canyon gardens, but the Mike Coffey garden had weights per ear more than double those at Crow Canyon. These data are available for each year, and the results can be examined by garden, shown here, or by maize variety, SLIDE 30 as seen in this image. These box plots show that there is little difference between varieties; instead it is differences in the local conditions of each garden that account for the variation in the weight of the ears. -->
 
 
-SLIDE 32 Precipitation explains some but not all of the variation in yields. For example, 2013 was a year with above-average precipitation, but the yields were very low. I think this is explained by the timing of the precipitation in 2013. There was below average snowfall so the soil profile was depleted of moisture at beginning of the growing season. SLIDE 33 The dry winter was followed by no moisture in May, June, and most of July, as illustrated by the black bars in this image. When the monsoon rains finally began it was too late, and most corn plants had died with only the CDG garden producing yields.  2014 is another year of low yields, but this was due to the problem Steve Dominguez described in his presentation. There was an unusual abundance of rabbits in 2014. We actually had good germination this year and believe we would have had a harvest, but the plague of rabbits found a way through the fencing in late June and ate almost all of the plants. 
+<!-- SLIDE 31 This next plot examines the yields as kilograms per hectare through time. The menus let you examine kernel weight or ear weight, and let you look at yields by corn variety or by garden. This plot illustrates significant variation in yields from garden to garden and year to year. The amount of annual precipitation is shown beneath each year, and this can be compared to the long-term average. Five of eight years had below-average precipitation, while three years were above average.  -->
 
 
-SLIDE 34 2008, 2010, and 2015 had the highest yields. 2008 had below average annual precipitation, but it had the largest winter snowpack of any year. 2008 illustrates the importance of snowpack for replenishing soil moisture and how abundant early-season soil moisture positively affects yields.  Above-average moisture in 2010 and 2015 produced higher yields; however, we need to do more analyses to understand the variation from garden to garden, including what accounts for the exceptionally high yields from the CDG garden in 2010 and MCG garden in 2015.
-	
-	
-An important goal of the PFP is to help us estimate the ancestral Pueblo agricultural productivity. This is critical because studies have shown that almost from the time when corn farming was introduced, corn accounted for about 75 percent of the calories consumed by ancestral Pueblo people. We need a way to estimate ancestral Pueblo agricultural yields and how they varied across space and through time. 
+<!-- SLIDE 32 Precipitation explains some but not all of the variation in yields. For example, 2013 was a year with above-average precipitation, but the yields were very low. I think this is explained by the timing of the precipitation in 2013. There was below average snowfall so the soil profile was depleted of moisture at beginning of the growing season. SLIDE 33 The dry winter was followed by no moisture in May, June, and most of July, as illustrated by the black bars in this image. When the monsoon rains finally began it was too late, and most corn plants had died with only the CDG garden producing yields.  2014 is another year of low yields, but this was due to the problem Steve Dominguez described in his presentation. There was an unusual abundance of rabbits in 2014. We actually had good germination this year and believe we would have had a harvest, but the plague of rabbits found a way through the fencing in late June and ate almost all of the plants.  -->
 
 
-Scientists have been working on this for decades, and the most rigorous studies have been developed in the Mesa Verde region. This includes three successive studies that built on each other: SLIDE 35 Barney Burns 1983 Ph.D. dissertation, SLIDE 36 Carla Van West’s dissertation and subsequent 1994 book; SLIDE 37 and the Village Ecodynamics Project computational models developed by Tim Kohler, Dave Johnson, and Kyle Bocinsky.
+<!-- SLIDE 34 2008, 2010, and 2015 had the highest yields. 2008 had below average annual precipitation, but it had the largest winter snowpack of any year. 2008 illustrates the importance of snowpack for replenishing soil moisture and how abundant early-season soil moisture positively affects yields.  Above-average moisture in 2010 and 2015 produced higher yields; however, we need to do more analyses to understand the variation from garden to garden, including what accounts for the exceptionally high yields from the CDG garden in 2010 and MCG garden in 2015. -->
 
 
-SLIDE 38 The web tool will allow the user to understand how the VEP model was constructed and then compare the VEP estimates to the PFP yields. It begins by exploring how soils were incorporated into the VEP model. The polygons in this image show the different soils in the portion of the VEP study area where the PFP gardens are located. SLIDE 39 Clicking on a polygon allows the user to view the relevant information about each soil, as seen in this example.
-
-SLIDE 40 Next the web tool examines the VEP-estimated yields for each soil polygon. Sliding this bar provides the changing yield estimates for each year between 2008 and 2015, SLIDE 41 and when a polygon is clicked the relevant information on yields appears. SLIDE 42 We can zoom in to show the polygon where three PFP gardens are located: the CDG, PLC, and POG gardens. 
-
-SLIDE 43 This image compares the PFP yields—the dots—to the VEP estimates—the lines. The top line is VEP estimates for the polygon that contains the CDG, PLC, and POG gardens; the middle line the VEP estimate for the KUG garden; the bottom line is the VEP estimate for the PHG garden. 
-
-This graph shows that the VEP estimates and PFP yields are in the same ball park—indeed, in some cases the estimates and the yields virtually identical—and this increases our confidence in the VEP model. The graph also shows that the trends are the same for the VEP estimates and PFP yields, which also increases our confidence in the model estimates. 
-
-But this comparison also reveals an important difference: the PFP yields display greater variation than the VEP estimates. In general, the PFP yields suggest the VEP model overestimates yields in dry years and underestimates yields in wet years. I suspect two factors contribute this. One is that we have a limited amount of time we can spend preparing and tending our agricultural plots, and this almost certainly affects yields, especially during dry years where extra care might make a difference. The second and related point is that we don’t have the vast knowledge of farming possessed by Pueblo people past and present. They likely employed strategies that could have reduced the variance in yields. 
+<!-- An important goal of the PFP is to help us estimate the ancestral Pueblo agricultural productivity. This is critical because studies have shown that almost from the time when corn farming was introduced, corn accounted for about 75 percent of the calories consumed by ancestral Pueblo people. We need a way to estimate ancestral Pueblo agricultural yields and how they varied across space and through time.  -->
 
 
-Conclusions
-To conclude, the PFP is an ongoing and long-term study, and we believe it will provide many useful results.  The point I made above—that VEP and PFP data display the same trends—is important in this regard because it suggests that PFP results could be used to rescale the VEP model estimates thereby increasing their accuracy. We look forward to our continuing partnership with Hopi on the PFP and the many research and education products that will come out of this project. Thank you.
+<!-- Scientists have been working on this for decades, and the most rigorous studies have been developed in the Mesa Verde region. This includes three successive studies that built on each other: SLIDE 35 Barney Burns 1983 Ph.D. dissertation, SLIDE 36 Carla Van West’s dissertation and subsequent 1994 book; SLIDE 37 and the Village Ecodynamics Project computational models developed by Tim Kohler, Dave Johnson, and Kyle Bocinsky. -->
+
+
+<!-- SLIDE 38 The web tool will allow the user to understand how the VEP model was constructed and then compare the VEP estimates to the PFP yields. It begins by exploring how soils were incorporated into the VEP model. The polygons in this image show the different soils in the portion of the VEP study area where the PFP gardens are located. SLIDE 39 Clicking on a polygon allows the user to view the relevant information about each soil, as seen in this example. -->
+
+<!-- SLIDE 40 Next the web tool examines the VEP-estimated yields for each soil polygon. Sliding this bar provides the changing yield estimates for each year between 2008 and 2015, SLIDE 41 and when a polygon is clicked the relevant information on yields appears. SLIDE 42 We can zoom in to show the polygon where three PFP gardens are located: the CDG, PLC, and POG gardens.  -->
+
+<!-- SLIDE 43 This image compares the PFP yields—the dots—to the VEP estimates—the lines. The top line is VEP estimates for the polygon that contains the CDG, PLC, and POG gardens; the middle line the VEP estimate for the KUG garden; the bottom line is the VEP estimate for the PHG garden.  -->
+
+<!-- This graph shows that the VEP estimates and PFP yields are in the same ball park—indeed, in some cases the estimates and the yields virtually identical—and this increases our confidence in the VEP model. The graph also shows that the trends are the same for the VEP estimates and PFP yields, which also increases our confidence in the model estimates.  -->
+
+<!-- But this comparison also reveals an important difference: the PFP yields display greater variation than the VEP estimates. In general, the PFP yields suggest the VEP model overestimates yields in dry years and underestimates yields in wet years. I suspect two factors contribute this. One is that we have a limited amount of time we can spend preparing and tending our agricultural plots, and this almost certainly affects yields, especially during dry years where extra care might make a difference. The second and related point is that we don’t have the vast knowledge of farming possessed by Pueblo people past and present. They likely employed strategies that could have reduced the variance in yields.  -->
+
+
+<!-- Conclusions -->
+<!-- To conclude, the PFP is an ongoing and long-term study, and we believe it will provide many useful results.  The point I made above—that VEP and PFP data display the same trends—is important in this regard because it suggests that PFP results could be used to rescale the VEP model estimates thereby increasing their accuracy. We look forward to our continuing partnership with Hopi on the PFP and the many research and education products that will come out of this project. Thank you. -->
 
 
 ## Acknowledgements {.tabset}
