@@ -220,7 +220,7 @@ shiny::renderPlot({
   }
   
   # xrange <- range(moisture_data$Time)
-  xrange <- as.POSIXct(c("2015-06-01 UTC","2016-03-01 UTC"))
+  xrange <- as.POSIXct(c("2015-06-01 UTC","2016-12-31 UTC"))
   
   soil_moisture_plot <- ggplot2::ggplot() + 
     ggplot2::ggtitle(paste0("Soil ",input$the_var_soil_moisture,": ", input$the_garden_soil_moisture)) +
